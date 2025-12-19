@@ -2,6 +2,8 @@
 
 > A curated collection of tools, configurations, and workflows for setting up a new Mac for software development in 2025.
 
+🔗 **Live:** [initdevkit.vercel.app](https://initdevkit.vercel.app)
+
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/surajpatildev/devkit)
 
 ## ✨ Features
@@ -70,15 +72,6 @@ Or use the CLI:
 ```bash
 bunx vercel
 ```
-
-## 🎨 Suggested Vercel Subdomain Names
-
-Pick one for your deployment:
-- `devkit.vercel.app`
-- `macdevkit.vercel.app`
-- `initdev.vercel.app`
-- `macforge.vercel.app`
-- `brewstack.vercel.app`
 
 ## 📝 License
 
