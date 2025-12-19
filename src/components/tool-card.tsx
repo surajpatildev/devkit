@@ -78,17 +78,15 @@ export function ToolCard({
     >
       <CardContent className="p-5">
         <div className="flex justify-between items-start gap-3 mb-3">
-          <h3 className="font-semibold">
-            <a
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-foreground hover:text-primary transition-colors inline-flex items-center gap-1.5 group/link underline decoration-border hover:decoration-primary underline-offset-4"
-            >
-              {name}
-              <ExternalLink className="w-3.5 h-3.5 text-muted-foreground group-hover/link:text-primary transition-colors" />
-            </a>
-          </h3>
+          <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-foreground hover:text-primary transition-colors group/link"
+          >
+            <h3 className="font-semibold">{name}</h3>
+            <ExternalLink className="w-4 h-4 text-muted-foreground group-hover/link:text-primary transition-colors" />
+          </a>
           <div className="flex gap-1.5 flex-wrap justify-end shrink-0">
             {tags.map((tag, i) => (
               <Badge
@@ -114,26 +112,27 @@ export function ToolCard({
           {description}
         </p>
 
-        <div className="flex items-center gap-2 bg-background/50 border border-border/50 rounded-lg px-3 py-2 group/install">
+        <div
+          className="flex items-center gap-2 bg-background/50 border border-border/50 rounded-lg px-3 py-2 cursor-pointer hover:border-primary/50 transition-colors"
+          onClick={handleCopy}
+        >
           <code className="text-xs text-muted-foreground flex-1 overflow-hidden text-ellipsis whitespace-nowrap font-mono">
             <span className="text-primary/60">$</span> {installCommand}
           </code>
-          <button
-            onClick={handleCopy}
+          <div
             className={cn(
               "p-1.5 rounded-md transition-all shrink-0",
               copied
                 ? "text-primary bg-primary/10"
-                : "text-muted-foreground hover:text-primary hover:bg-primary/10 opacity-0 group-hover/install:opacity-100"
+                : "text-muted-foreground hover:text-primary"
             )}
-            aria-label="Copy command"
           >
             {copied ? (
-              <Check className="w-3.5 h-3.5" />
+              <Check className="w-4 h-4" />
             ) : (
-              <Copy className="w-3.5 h-3.5" />
+              <Copy className="w-4 h-4" />
             )}
-          </button>
+          </div>
         </div>
       </CardContent>
     </Card>
