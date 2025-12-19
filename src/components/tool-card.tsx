@@ -78,15 +78,15 @@ export function ToolCard({
     >
       <CardContent className="p-5">
         <div className="flex justify-between items-start gap-3 mb-3">
-          <h3 className="font-semibold text-foreground">
+          <h3 className="font-semibold">
             <a
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-primary transition-colors inline-flex items-center gap-1.5 group/link"
+              className="text-foreground hover:text-primary transition-colors inline-flex items-center gap-1.5 group/link underline decoration-border hover:decoration-primary underline-offset-4"
             >
               {name}
-              <ExternalLink className="w-3.5 h-3.5 opacity-0 -translate-y-0.5 group-hover/link:opacity-100 group-hover/link:translate-y-0 transition-all" />
+              <ExternalLink className="w-3.5 h-3.5 text-muted-foreground group-hover/link:text-primary transition-colors" />
             </a>
           </h3>
           <div className="flex gap-1.5 flex-wrap justify-end shrink-0">
