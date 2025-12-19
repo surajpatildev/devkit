@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>./mac-setup — Developer Guide 2025</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0b;
+            --bg-elevated: #111113;
+            --bg-card: #161618;
+            --border: #252528;
+            --text: #e4e4e7;
+            --text-dim: #71717a;
+            --text-muted: #52525b;
+            --green: #22c55e;
+            --green-dim: #16a34a;
+            --cyan: #06b6d4;
+            --yellow: #eab308;
+            --purple: #a855f7;
+            --pink: #ec4899;
+            --orange: #f97316;
+            --red: #ef4444;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+        
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        ::selection { background: var(--green); color: var(--bg); }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            background: rgba(10,10,11,0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 2rem;
+        }
+
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            height: 64px;
+            gap: 2rem;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--green);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo::before { content: '>'; animation: blink 1s infinite; }
+        @keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
+
+        .nav-links {
+            display: flex;
+            gap: 0.25rem;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .nav-links::-webkit-scrollbar { display: none; }
+
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.8rem;
+            border-radius: 4px;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        .nav-links a:hover { color: var(--text); background: var(--bg-card); }
+        .nav-links a.active { color: var(--green); background: rgba(34,197,94,0.1); }
+
+        .hero {
+            padding: 140px 2rem 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text) 0%, var(--text-dim) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p { color: var(--text-dim); font-size: 1rem; max-width: 600px; }
+
+        .hero-meta {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .hero-meta span { display: flex; align-items: center; gap: 0.5rem; }
+        .hero-meta .dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; }
+
+        main { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+        section { padding: 4rem 0; border-bottom: 1px solid var(--border); }
+        section:last-child { border-bottom: none; }
+
+        .section-header { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 2rem; }
+        .section-num { font-size: 0.75rem; color: var(--green); font-weight: 600; }
+
+        h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .section-desc { color: var(--text-dim); margin-bottom: 2rem; max-width: 700px; }
+
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 1rem;
+        }
+
+        .tool {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: var(--tool-accent, var(--green));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tool:hover { border-color: var(--tool-accent, var(--green)); transform: translateY(-2px); }
+        .tool:hover::before { opacity: 1; }
+
+        .tool-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; }
+        .tool h3 { font-size: 1rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; }
+        .tool h3 a { color: var(--text); text-decoration: none; }
+        .tool h3 a:hover { color: var(--green); }
+
+        .tool-tags { display: flex; gap: 0.4rem; }
+        .tag { font-size: 0.65rem; padding: 0.2rem 0.5rem; border-radius: 3px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.03em; }
+        .tag-free { background: rgba(34,197,94,0.15); color: var(--green); }
+        .tag-paid { background: rgba(234,179,8,0.15); color: var(--yellow); }
+        .tag-oss { background: rgba(6,182,212,0.15); color: var(--cyan); }
+        .tag-rec { background: rgba(168,85,247,0.15); color: var(--purple); }
+
+        .tool p { color: var(--text-dim); font-size: 0.85rem; line-height: 1.6; margin-bottom: 0.75rem; }
+
+        .tool-install {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .tool-install code { color: var(--text-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+        .copy-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0.25rem;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        .copy-btn:hover { color: var(--green); background: rgba(34,197,94,0.1); }
+        .copy-btn.copied { color: var(--green); }
+        .copy-btn svg { width: 14px; height: 14px; }
+
+        pre {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+            overflow-x: auto;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+
+        pre .pre-header {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        pre .pre-lang { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; }
+
+        .comment { color: var(--text-muted); }
+        .cmd { color: var(--cyan); }
+        .str { color: var(--green); }
+        .flag { color: var(--yellow); }
+
+        .table-wrap {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+        }
+
+        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        th { text-align: left; padding: 1rem; background: var(--bg-card); font-weight: 600; color: var(--text-dim); border-bottom: 1px solid var(--border); white-space: nowrap; }
+        td { padding: 0.85rem 1rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: var(--bg-card); }
+        td strong { color: var(--text); font-weight: 600; }
+
+        .brewfile {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+        }
+
+        .brewfile-header {
+            background: var(--bg-card);
+            padding: 0.75rem 1rem;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brewfile-left { display: flex; align-items: center; gap: 0.75rem; }
+        .brewfile-dots { display: flex; gap: 6px; }
+        .brewfile-dots span { width: 12px; height: 12px; border-radius: 50%; }
+        .brewfile-dots span:nth-child(1) { background: #ff5f57; }
+        .brewfile-dots span:nth-child(2) { background: #febc2e; }
+        .brewfile-dots span:nth-child(3) { background: #28c840; }
+
+        .brewfile pre { margin: 0; border: none; border-radius: 0; max-height: 500px; overflow-y: auto; }
+
+        .checklist { display: grid; gap: 0.5rem; }
+        .check-item { display: flex; gap: 1rem; padding: 1rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; }
+        .check-box { width: 20px; height: 20px; border: 2px solid var(--green); border-radius: 4px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: var(--green); font-size: 0.7rem; }
+        .check-content strong { display: block; margin-bottom: 0.25rem; }
+        .check-content span { font-size: 0.85rem; color: var(--text-muted); }
+
+        footer { border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; color: var(--text-muted); font-size: 0.8rem; }
+
+        @media (max-width: 768px) {
+            .nav-inner { padding: 0; }
+            .hero { padding: 120px 1.5rem 60px; }
+            main { padding: 0 1.5rem; }
+            section { padding: 3rem 0; }
+            .tool-grid { grid-template-columns: 1fr; }
+        }
+
+        .glow-green { --tool-accent: var(--green); }
+        .glow-cyan { --tool-accent: var(--cyan); }
+        .glow-purple { --tool-accent: var(--purple); }
+        .glow-yellow { --tool-accent: var(--yellow); }
+        .glow-pink { --tool-accent: var(--pink); }
+        .glow-orange { --tool-accent: var(--orange); }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-inner">
+            <div class="logo">mac-setup</div>
+            <div class="nav-links">
+                <a href="#quick-start">Quick Start</a>
+                <a href="#terminal">Terminal</a>
+                <a href="#ai">AI Tools</a>
+                <a href="#editors">Editors</a>
+                <a href="#productivity">Productivity</a>
+                <a href="#dev">Dev Tools</a>
+                <a href="#notes">Notes</a>
+                <a href="#brewfile">Brewfile</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <h1>Mac Developer Setup</h1>
+        <p>A curated collection of tools, configurations, and workflows for setting up a new Mac for software development in 2025.</p>
+        <div class="hero-meta">
+            <span><span class="dot"></span>Last updated Dec 2025</span>
+            <span>50+ tools</span>
+            <span>macOS Sequoia</span>
+        </div>
+    </header>
+
+    <main>
+        <!-- QUICK START -->
+        <section id="quick-start">
+            <div class="section-header">
+                <span class="section-num">01</span>
+                <h2>Quick Start</h2>
+            </div>
+            <p class="section-desc">Essential setup checklist for a new Mac.</p>
+
+            <div class="checklist">
+                <div class="check-item">
+                    <div class="check-box">✓</div>
+                    <div class="check-content">
+                        <strong>Xcode CLI + Homebrew</strong>
+                        <span>xcode-select --install, then brew.sh</span>
+                    </div>
+                </div>
+                <div class="check-item">
+                    <div class="check-box">✓</div>
+                    <div class="check-content">
+                        <strong>Terminal (Ghostty or Warp)</strong>
+                        <span>Speed vs AI features</span>
+                    </div>
+                </div>
+                <div class="check-item">
+                    <div class="check-box">✓</div>
+                    <div class="check-content">
+                        <strong>Raycast</strong>
+                        <span>Replace Spotlight. Clipboard history, snippets, window management</span>
+                    </div>
+                </div>
+                <div class="check-item">
+                    <div class="check-box">✓</div>
+                    <div class="check-content">
+                        <strong>Git + SSH + uv</strong>
+                        <span>Version control, Python tooling</span>
+                    </div>
+                </div>
+                <div class="check-item">
+                    <div class="check-box">✓</div>
+                    <div class="check-content">
+                        <strong>VS Code or Cursor</strong>
+                        <span>Extensions, settings sync</span>
+                    </div>
+                </div>
+                <div class="check-item">
+                    <div class="check-box">✓</div>
+                    <div class="check-content">
+                        <strong>Modern CLI tools</strong>
+                        <span>eza, bat, zoxide, ripgrep, fzf, delta, lazygit</span>
+                    </div>
+                </div>
+                <div class="check-item">
+                    <div class="check-box">✓</div>
+                    <div class="check-content">
+                        <strong>Claude Desktop + Claude Code</strong>
+                        <span>Desktop for questions, Claude Code for terminal agent</span>
+                    </div>
+                </div>
+                <div class="check-item">
+                    <div class="check-box">✓</div>
+                    <div class="check-content">
+                        <strong>Window management</strong>
+                        <span>Rectangle (simple) or AeroSpace (tiling)</span>
+                    </div>
+                </div>
+            </div>
+
+            <pre>
+                <div class="pre-header">
+                    <span class="pre-lang">bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                </div>
+<code><span class="comment"># Homebrew</span>
+/bin/bash -c <span class="str">"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</span>
+<span class="cmd">echo</span> <span class="str">'eval "$(/opt/homebrew/bin/brew shellenv)"'</span> >> ~/.zshrc
+
+<span class="comment"># macOS tweaks</span>
+<span class="cmd">defaults</span> write NSGlobalDomain KeyRepeat <span class="flag">-int</span> 1
+<span class="cmd">defaults</span> write NSGlobalDomain InitialKeyRepeat <span class="flag">-int</span> 10
+<span class="cmd">defaults</span> write com.apple.finder AppleShowAllFiles <span class="flag">-bool</span> true
+<span class="cmd">killall</span> Finder</code></pre>
+        </section>
+
+        <!-- TERMINAL -->
+        <section id="terminal">
+            <div class="section-header">
+                <span class="section-num">02</span>
+                <h2>Terminal</h2>
+            </div>
+            <p class="section-desc">Modern terminal setup — fast emulators, shell config, CLI tools.</p>
+
+            <div class="tool-grid">
+                <div class="tool glow-green">
+                    <div class="tool-head">
+                        <h3><a href="https://ghostty.org">Ghostty</a></h3>
+                        <div class="tool-tags">
+                            <span class="tag tag-free">Free</span>
+                            <span class="tag tag-oss">OSS</span>
+                            <span class="tag tag-rec">Recommended</span>
+                        </div>
+                    </div>
+                    <p>GPU-accelerated terminal by Mitchell Hashimoto. Extremely fast, native macOS feel, zero-config.</p>
+                    <div class="tool-install">
+                        <code>brew install --cask ghostty</code>
+                        <button class="copy-btn" onclick="copyText(this, 'brew install --cask ghostty')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                    </div>
+                </div>
+
+                <div class="tool glow-cyan">
+                    <div class="tool-head">
+                        <h3><a href="https://warp.dev">Warp</a></h3>
+                        <div class="tool-tags">
+                            <span class="tag tag-free">Free tier</span>
+                            <span class="tag tag-paid">Pro $15/mo</span>
+                        </div>
+                    </div>
+                    <p>AI-powered terminal. Block-based output, command suggestions, MCP support.</p>
+                    <div class="tool-install">
+                        <code>brew install --cask warp</code>
+                        <button class="copy-btn" onclick="copyText(this, 'brew install --cask warp')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="margin: 2.5rem 0 1rem; color: var(--text-dim); font-size: 0.9rem;">Modern CLI Replacements</h3>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Tool</th><th>Replaces</th><th>Why better</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>eza</strong></td><td>ls</td><td>Icons, git status, tree view</td></tr>
+                        <tr><td><strong>bat</strong></td><td>cat</td><td>Syntax highlighting, line numbers</td></tr>
+                        <tr><td><strong>zoxide</strong></td><td>cd</td><td>Learns habits. <code>z proj</code> → ~/Developer/project</td></tr>
+                        <tr><td><strong>ripgrep</strong></td><td>grep</td><td>10x faster, respects .gitignore</td></tr>
+                        <tr><td><strong>fd</strong></td><td>find</td><td>Simple: <code>fd "\.py$"</code></td></tr>
+                        <tr><td><strong>fzf</strong></td><td>—</td><td>Fuzzy finder for files, history</td></tr>
+                        <tr><td><strong>delta</strong></td><td>diff</td><td>Beautiful git diffs</td></tr>
+                        <tr><td><strong>lazygit</strong></td><td>git cli</td><td>TUI for git</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <pre>
+                <div class="pre-header">
+                    <span class="pre-lang">bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                </div>
+<code><span class="comment"># Install all CLI tools</span>
+<span class="cmd">brew</span> install eza bat zoxide ripgrep fd fzf delta tldr btop lazygit
+
+<span class="comment"># Add to ~/.zshrc</span>
+<span class="cmd">alias</span> ls=<span class="str">"eza --color=always --icons=always --git"</span>
+<span class="cmd">alias</span> ll=<span class="str">"eza -la --icons=always --git"</span>
+<span class="cmd">alias</span> cat=<span class="str">"bat --paging=never"</span>
+<span class="cmd">eval</span> <span class="str">"$(zoxide init zsh)"</span>
+<span class="cmd">eval</span> <span class="str">"$(fzf --zsh)"</span></code></pre>
+        </section>
+
+        <!-- AI TOOLS -->
+        <section id="ai">
+            <div class="section-header">
+                <span class="section-num">03</span>
+                <h2>AI Tools</h2>
+            </div>
+            <p class="section-desc">Coding agents, AI assistants, voice dictation, meeting tools.</p>
+
+            <h3 style="margin: 0 0 1rem; color: var(--text-dim); font-size: 0.9rem;">Coding Agents</h3>
+            <div class="tool-grid">
+                <div class="tool glow-purple">
+                    <div class="tool-head">
+                        <h3><a href="https://claude.ai/product/claude-code">Claude Code</a></h3>
+                        <div class="tool-tags">
+                            <span class="tag tag-paid">Pro $20+</span>
+                            <span class="tag tag-rec">Recommended</span>
+                        </div>
+                    </div>
+                    <p>Terminal coding agent. Understands your codebase, edits files, runs tests, handles git. MCP for GitHub, databases.</p>
+                    <div class="tool-install">
+                        <code>curl -fsSL https://claude.ai/install.sh | bash</code>
+                        <button class="copy-btn" onclick="copyText(this, 'curl -fsSL https://claude.ai/install.sh | bash')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                    </div>
+                </div>
+
+                <div class="tool glow-cyan">
+                    <div class="tool-head">
+                        <h3><a href="https://cursor.com">Cursor</a></h3>
+                        <div class="tool-tags">
+                            <span class="tag tag-free">Free tier</span>
+                            <span class="tag tag-paid">Pro $20/mo</span>
+                        </div>
+                    </div>
+                    <p>VS Code fork with AI. ⌘K inline gen, ⌘L codebase chat, smart Tab completions.</p>
+                    <div class="tool-install">
+                        <code>brew install --cask cursor</code>
+                        <button class="copy-btn" onclick="copyText(this, 'brew install --cask cursor')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                    </div>
+                </div>
+
+                <div class="tool glow-green">
+                    <div class="tool-head">
+                        <h3><a href="https://aider.chat">Aider</a></h3>
+                        <div class="tool-tags">
+                            <span class="tag tag-free">Free</span>
+                            <span class="tag tag-oss">OSS</span>
+                        </div>
+                    </div>
+                    <p>Open-source terminal coding assistant. Works with any LLM. Strong git integration.</p>
+                    <div class="tool-install">
+                        <code>brew install aider</code>
+                        <button class="copy-btn" onclick="copyText(this, 'brew install aider')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="margin: 2.5rem 0 1rem; color: var(--text-dim); font-size: 0.9rem;">AI Assistants</h3>
+            <div class="tool-grid">
+                <div class="tool glow-purple">
+                    <div class="tool-head">
+                        <h3><a href="https://claude.ai/download">Claude Desktop</a></h3>
+                        <div class="tool-tags">
+                            <span class="tag tag-free">Free tier</span>
+                            <span class="tag tag-paid">Pro/Max</span>
+                        </div>
+                    </div>
+                    <p>Native Mac app. Drag-drop files, screenshots. Voice via Caps Lock. MCP for external tools.</p>
+                    <div class="tool-install">
+                        <code>brew install --cask claude</code>
+                        <button class="copy-btn" onclick="copyText(this, 'brew install --cask claude')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                    </div>
+                </div>
+
+                <div class="tool glow-cyan">
+                    <div class="tool-head">
+                        <h3><a href="https://openai.com/chatgpt/desktop">ChatGPT Desktop</a></h3>
+                        <div class="tool-tags">
+                            <span class="tag tag-free">Free tier</span>
+                            <span class="tag tag-paid">Plus $20/mo</span>
+                        </div>
+                    </div>
+                    <p>Option+Space quick launcher. Can read your IDE code. Built-in voice. DALL-E images.</p>
+                    <div class="tool-install">
+                        <code>brew install --cask chatgpt</code>
+                        <button class="copy-btn" onclick="copyText(this, 'brew install --cask chatgpt')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="margin: 2.5rem 0 1rem; color: var(--text-dim); font-size: 0.9rem;">Voice & Meetings</h3>
+            <div class="tool-grid">
+                <div class="tool glow-pink">
+                    <div class="tool-head">
+                        <h3><a href="https://wisprflow.ai">Wispr Flow</a></h3>
+                        <div class="tool-tags">
+                            <span class="tag tag-free">Free tier</span>
+                            <span class="tag tag-paid">$10/mo</span>
+                        </div>
+                    </div>
+                    <p>AI dictation in any app. Removes filler words, fixes grammar. Cloud-based.</p>
+                    <div class="tool-install">
+                        <code>brew install --cask wispr-flow</code>
+                        <button class="copy-btn" onclick="copyText(this, 'brew install --cask wispr-flow')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                    </div>
+                </div>
+
+                <div class="tool glow-green">
+                    <div class="tool-head">
+                        <h3><a href="https://superwhisper.com">SuperWhisper</a></h3>
+                        <div class="tool-tags">
+                            <span class="tag tag-paid">$30 one-time</span>
+                        </div>
+                    </div>
+                    <p>Offline voice-to-text using Whisper. All processing on device — privacy-first.</p>
+                    <div class="tool-install">
+                        <code>brew install --cask superwhisper</code>
+                        <button class="copy-btn" onclick="copyText(this, 'brew install --cask superwhisper')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                    </div>
+                </div>
+
+                <div class="tool glow-orange">
+                    <div class="tool-head">
+                        <h3><a href="https://granola.ai">Granola</a></h3>
+                        <div class="tool-tags">
+                            <span class="tag tag-free">Free tier</span>
+                            <span class="tag tag-paid">$14/mo</span>
+                        </div>
+                    </div>
+                    <p>AI meeting notes. Transcribes from Mac audio — no bot joins your call.</p>
+                    <div class="tool-install">
+                        <code>brew install --cask granola</code>
+                        <button class="copy-btn" onclick="copyText(this, 'brew install --cask granola')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EDITORS -->
+        <section id="editors">
+            <div class="section-header">
+                <span class="section-num">04</span>
+                <h2>Editors & Browsers</h2>
+            </div>
+
+            <div class="tool-grid">
+                <div class="tool glow-cyan">
+                    <div class="tool-head">
+                        <h3><a href="https://code.visualstudio.com">VS Code</a></h3>
+                        <div class="tool-tags">
+                            <span class="tag tag-free">Free</span>
+                            <span class="tag tag-oss">OSS</span>
+                        </div>
+                    </div>
+                    <p>Industry standard. Massive extension ecosystem. Add GitHub Copilot for AI.</p>
+                    <div class="tool-install">
+                        <code>brew install --cask visual-studio-code</code>
+                        <button class="copy-btn" onclick="copyText(this, 'brew install --cask visual-studio-code')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                    </div>
+                </div>
+
+                <div class="tool glow-yellow">
+                    <div class="tool-head">
+                        <h3><a href="https://zed.dev">Zed</a></h3>
+                        <div class="tool-tags">
+                            <span class="tag tag-free">Free</span>
+                            <span class="tag tag-oss">OSS</span>
+                        </div>
+                    </div>
+                    <p>High-performance editor from Atom creators. Native Mac, extremely fast. Built-in AI.</p>
+                    <div class="tool-install">
+                        <code>brew install --cask zed</code>
+                        <button class="copy-btn" onclick="copyText(this, 'brew install --cask zed')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                    </div>
+                </div>
+
+                <div class="tool glow-green">
+                    <div class="tool-head">
+                        <h3><a href="https://zen-browser.app">Zen Browser</a></h3>
+                        <div class="tool-tags">
+                            <span class="tag tag-free">Free</span>
+                            <span class="tag tag-oss">OSS</span>
+                            <span class="tag tag-rec">Recommended</span>
+                        </div>
+                    </div>
+                    <p>Firefox-based, Arc-inspired. Vertical tabs, workspaces. Full Firefox extension support.</p>
+                    <div class="tool-install">
+                        <code>brew install --cask zen-browser</code>
+                        <button class="copy-btn" onclick="copyText(this, 'brew install --cask zen-browser')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                    </div>
+                </div>
+
+                <div class="tool glow-orange">
+                    <div class="tool-head">
+                        <h3><a href="https://arc.net">Arc</a></h3>
+                        <div class="tool-tags">
+                            <span class="tag tag-free">Free</span>
+                        </div>
+                    </div>
+                    <p>Chromium-based with sidebar, spaces, split view. Note: now in maintenance mode.</p>
+                    <div class="tool-install">
+                        <code>brew install --cask arc</code>
+                        <button class="copy-btn" onclick="copyText(this, 'brew install --cask arc')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRODUCTIVITY -->
+        <section id="productivity">
+            <div class="section-header">
+                <span class="section-num">05</span>
+                <h2>Productivity</h2>
+            </div>
+
+            <div class="tool-grid">
+                <div class="tool glow-purple">
+                    <div class="tool-head">
+                        <h3><a href="https://raycast.com">Raycast</a></h3>
+                        <div class="tool-tags">
+                            <span class="tag tag-free">Free</span>
+                            <span class="tag tag-paid">Pro $8/mo</span>
+                            <span class="tag tag-rec">Essential</span>
+                        </div>
+                    </div>
+                    <p>Spotlight replacement. Clipboard history, snippets, window management. Extensions for GitHub, Jira, Linear.</p>
+                    <div class="tool-install">
+                        <code>brew install --cask raycast</code>
+                        <button class="copy-btn" onclick="copyText(this, 'brew install --cask raycast')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                    </div>
+                </div>
+
+                <div class="tool glow-green">
+                    <div class="tool-head">
+                        <h3><a href="https://rectangleapp.com">Rectangle</a></h3>
+                        <div class="tool-tags">
+                            <span class="tag tag-free">Free</span>
+                            <span class="tag tag-oss">OSS</span>
+                        </div>
+                    </div>
+                    <p>Simple window snapping. ⌃⌥← left half, ⌃⌥→ right half. Zero config.</p>
+                    <div class="tool-install">
+                        <code>brew install --cask rectangle</code>
+                        <button class="copy-btn" onclick="copyText(this, 'brew install --cask rectangle')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                    </div>
+                </div>
+
+                <div class="tool glow-cyan">
+                    <div class="tool-head">
+                        <h3><a href="https://github.com/nikitabobko/AeroSpace">AeroSpace</a></h3>
+                        <div class="tool-tags">
+                            <span class="tag tag-free">Free</span>
+                            <span class="tag tag-oss">OSS</span>
+                        </div>
+                    </div>
+                    <p>i3-like tiling WM. Windows auto-tile. Keyboard workspaces (Option+1-9). No SIP disable.</p>
+                    <div class="tool-install">
+                        <code>brew install --cask aerospace</code>
+                        <button class="copy-btn" onclick="copyText(this, 'brew install --cask aerospace')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                    </div>
+                </div>
+
+                <div class="tool glow-yellow">
+                    <div class="tool-head">
+                        <h3><a href="https://numi.app">Numi</a></h3>
+                        <div class="tool-tags">
+                            <span class="tag tag-free">Free</span>
+                        </div>
+                    </div>
+                    <p>Text-based calculator. <code>$50 in EUR</code>, <code>today + 2 weeks</code>. Variables, currencies.</p>
+                    <div class="tool-install">
+                        <code>brew install --cask numi</code>
+                        <button class="copy-btn" onclick="copyText(this, 'brew install --cask numi')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                    </div>
+                </div>
+
+                <div class="tool glow-green">
+                    <div class="tool-head">
+                        <h3><a href="https://icemenubar.app">Ice</a></h3>
+                        <div class="tool-tags">
+                            <span class="tag tag-free">Free</span>
+                            <span class="tag tag-oss">OSS</span>
+                        </div>
+                    </div>
+                    <p>Menu bar manager — hide icons you don't need. Free Bartender alternative.</p>
+                    <div class="tool-install">
+                        <code>brew install --cask ice</code>
+                        <button class="copy-btn" onclick="copyText(this, 'brew install --cask ice')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                    </div>
+                </div>
+
+                <div class="tool glow-cyan">
+                    <div class="tool-head">
+                        <h3><a href="https://github.com/exelban/stats">Stats</a></h3>
+                        <div class="tool-tags">
+                            <span class="tag tag-free">Free</span>
+                            <span class="tag tag-oss">OSS</span>
+                        </div>
+                    </div>
+                    <p>System monitor in menu bar. CPU, memory, disk, network, battery.</p>
+                    <div class="tool-install">
+                        <code>brew install --cask stats</code>
+                        <button class="copy-btn" onclick="copyText(this, 'brew install --cask stats')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DEV TOOLS -->
+        <section id="dev">
+            <div class="section-header">
+                <span class="section-num">06</span>
+                <h2>Dev Tools</h2>
+            </div>
+
+            <div class="tool-grid">
+                <div class="tool glow-green">
+                    <div class="tool-head">
+                        <h3><a href="https://usebruno.com">Bruno</a></h3>
+                        <div class="tool-tags">
+                            <span class="tag tag-free">Free</span>
+                            <span class="tag tag-oss">OSS</span>
+                            <span class="tag tag-rec">Recommended</span>
+                        </div>
+                    </div>
+                    <p>API client with collections as files. Git-friendly. Offline-first. Postman alternative.</p>
+                    <div class="tool-install">
+                        <code>brew install --cask bruno</code>
+                        <button class="copy-btn" onclick="copyText(this, 'brew install --cask bruno')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                    </div>
+                </div>
+
+                <div class="tool glow-cyan">
+                    <div class="tool-head">
+                        <h3><a href="https://proxyman.io">Proxyman</a></h3>
+                        <div class="tool-tags">
+                            <span class="tag tag-free">Free tier</span>
+                            <span class="tag tag-paid">$69</span>
+                        </div>
+                    </div>
+                    <p>HTTP debugging proxy. See/modify traffic, auto SSL. Native Mac.</p>
+                    <div class="tool-install">
+                        <code>brew install --cask proxyman</code>
+                        <button class="copy-btn" onclick="copyText(this, 'brew install --cask proxyman')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                    </div>
+                </div>
+
+                <div class="tool glow-purple">
+                    <div class="tool-head">
+                        <h3><a href="https://tableplus.com">TablePlus</a></h3>
+                        <div class="tool-tags">
+                            <span class="tag tag-free">Free tier</span>
+                            <span class="tag tag-paid">$99</span>
+                        </div>
+                    </div>
+                    <p>Database GUI. PostgreSQL, MySQL, SQLite, Redis, MongoDB. Safe mode for production.</p>
+                    <div class="tool-install">
+                        <code>brew install --cask tableplus</code>
+                        <button class="copy-btn" onclick="copyText(this, 'brew install --cask tableplus')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                    </div>
+                </div>
+
+                <div class="tool glow-yellow">
+                    <div class="tool-head">
+                        <h3><a href="https://devutils.com">DevUtils</a></h3>
+                        <div class="tool-tags">
+                            <span class="tag tag-paid">$29</span>
+                        </div>
+                    </div>
+                    <p>40+ tools: JSON formatter, JWT decoder, Base64, regex, hashes. Offline.</p>
+                    <div class="tool-install">
+                        <code>brew install --cask devutils</code>
+                        <button class="copy-btn" onclick="copyText(this, 'brew install --cask devutils')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                    </div>
+                </div>
+
+                <div class="tool glow-orange">
+                    <div class="tool-head">
+                        <h3><a href="https://docs.astral.sh/uv">uv</a></h3>
+                        <div class="tool-tags">
+                            <span class="tag tag-free">Free</span>
+                            <span class="tag tag-oss">OSS</span>
+                            <span class="tag tag-rec">Essential</span>
+                        </div>
+                    </div>
+                    <p>Replaces pyenv, pip, pipx, virtualenv, poetry. Rust-based, 10-100x faster.</p>
+                    <div class="tool-install">
+                        <code>brew install uv</code>
+                        <button class="copy-btn" onclick="copyText(this, 'brew install uv')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                    </div>
+                </div>
+
+                <div class="tool glow-green">
+                    <div class="tool-head">
+                        <h3><a href="https://github.com/Schniz/fnm">fnm</a></h3>
+                        <div class="tool-tags">
+                            <span class="tag tag-free">Free</span>
+                            <span class="tag tag-oss">OSS</span>
+                            <span class="tag tag-rec">Recommended</span>
+                        </div>
+                    </div>
+                    <p>Fast Node Manager. Rust-based nvm alternative. Cross-platform, .node-version support.</p>
+                    <div class="tool-install">
+                        <code>brew install fnm</code>
+                        <button class="copy-btn" onclick="copyText(this, 'brew install fnm')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                    </div>
+                </div>
+
+                <div class="tool glow-pink">
+                    <div class="tool-head">
+                        <h3><a href="https://bun.sh">Bun</a></h3>
+                        <div class="tool-tags">
+                            <span class="tag tag-free">Free</span>
+                            <span class="tag tag-oss">OSS</span>
+                            <span class="tag tag-rec">Recommended</span>
+                        </div>
+                    </div>
+                    <p>Fast JS runtime, bundler, test runner, package manager. Drop-in Node replacement.</p>
+                    <div class="tool-install">
+                        <code>brew install oven-sh/bun/bun</code>
+                        <button class="copy-btn" onclick="copyText(this, 'brew install oven-sh/bun/bun')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                    </div>
+                </div>
+
+                <div class="tool glow-cyan">
+                    <div class="tool-head">
+                        <h3><a href="https://www.docker.com/products/docker-desktop/">Docker Desktop</a></h3>
+                        <div class="tool-tags">
+                            <span class="tag tag-free">Free</span>
+                        </div>
+                    </div>
+                    <p>Containers on Mac. GUI for managing images, containers, volumes.</p>
+                    <div class="tool-install">
+                        <code>brew install --cask docker</code>
+                        <button class="copy-btn" onclick="copyText(this, 'brew install --cask docker')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                    </div>
+                </div>
+            </div>
+
+            <pre>
+                <div class="pre-header">
+                    <span class="pre-lang">bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                </div>
+<code><span class="comment"># fnm setup — add to ~/.zshrc</span>
+<span class="cmd">eval</span> <span class="str">"$(fnm env --use-on-cd)"</span>
+
+<span class="comment"># Install Node</span>
+<span class="cmd">fnm</span> install 22
+<span class="cmd">fnm</span> default 22
+
+<span class="comment"># Bun — works as npm/yarn replacement</span>
+<span class="cmd">bun</span> install          <span class="comment"># instead of npm install</span>
+<span class="cmd">bun</span> run dev          <span class="comment"># instead of npm run dev</span>
+<span class="cmd">bun</span> test             <span class="comment"># built-in test runner</span></code></pre>
+        </section>
+
+        <!-- NOTES & CALENDAR -->
+        <section id="notes">
+            <div class="section-header">
+                <span class="section-num">07</span>
+                <h2>Notes & Calendar</h2>
+            </div>
+
+            <div class="tool-grid">
+                <div class="tool glow-purple">
+                    <div class="tool-head">
+                        <h3><a href="https://obsidian.md">Obsidian</a></h3>
+                        <div class="tool-tags">
+                            <span class="tag tag-free">Free</span>
+                            <span class="tag tag-rec">Recommended</span>
+                        </div>
+                    </div>
+                    <p>Local-first markdown notes with [[linking]]. Build a personal knowledge graph. Thousands of plugins.</p>
+                    <div class="tool-install">
+                        <code>brew install --cask obsidian</code>
+                        <button class="copy-btn" onclick="copyText(this, 'brew install --cask obsidian')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                    </div>
+                </div>
+
+                <div class="tool glow-cyan">
+                    <div class="tool-head">
+                        <h3><a href="https://notion.so">Notion</a></h3>
+                        <div class="tool-tags">
+                            <span class="tag tag-free">Free tier</span>
+                            <span class="tag tag-paid">Plus $10/mo</span>
+                        </div>
+                    </div>
+                    <p>All-in-one workspace. Docs, databases, wikis, projects. Great for teams. AI built-in.</p>
+                    <div class="tool-install">
+                        <code>brew install --cask notion</code>
+                        <button class="copy-btn" onclick="copyText(this, 'brew install --cask notion')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                    </div>
+                </div>
+
+                <div class="tool glow-orange">
+                    <div class="tool-head">
+                        <h3><a href="https://bear.app">Bear</a></h3>
+                        <div class="tool-tags">
+                            <span class="tag tag-free">Free tier</span>
+                            <span class="tag tag-paid">$3/mo</span>
+                        </div>
+                    </div>
+                    <p>Beautiful markdown notes for Apple. Elegant tagging, focus mode. Simple and fast.</p>
+                    <div class="tool-install">
+                        <code>mas install 1091189122</code>
+                        <button class="copy-btn" onclick="copyText(this, 'mas install 1091189122')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                    </div>
+                </div>
+
+                <div class="tool glow-pink">
+                    <div class="tool-head">
+                        <h3><a href="https://flexibits.com/fantastical">Fantastical</a></h3>
+                        <div class="tool-tags">
+                            <span class="tag tag-free">Free tier</span>
+                            <span class="tag tag-paid">$6.99/mo</span>
+                        </div>
+                    </div>
+                    <p>Best calendar for Mac. Natural language input, multiple views, tasks, Calendly-style scheduling.</p>
+                    <div class="tool-install">
+                        <code>brew install --cask fantastical</code>
+                        <button class="copy-btn" onclick="copyText(this, 'brew install --cask fantastical')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                    </div>
+                </div>
+
+                <div class="tool glow-green">
+                    <div class="tool-head">
+                        <h3><a href="https://www.notion.so/product/calendar">Notion Calendar</a></h3>
+                        <div class="tool-tags">
+                            <span class="tag tag-free">Free</span>
+                        </div>
+                    </div>
+                    <p>Clean calendar with keyboard shortcuts. Deep Google Calendar sync. Was called Cron.</p>
+                    <div class="tool-install">
+                        <code>brew install --cask notion-calendar</code>
+                        <button class="copy-btn" onclick="copyText(this, 'brew install --cask notion-calendar')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                    </div>
+                </div>
+
+                <div class="tool glow-yellow">
+                    <div class="tool-head">
+                        <h3><a href="https://www.busymac.com/busycal/">BusyCal</a></h3>
+                        <div class="tool-tags">
+                            <span class="tag tag-paid">$49.99 one-time</span>
+                        </div>
+                    </div>
+                    <p>Highly customizable calendar. Natural language, weather, travel time. One-time purchase.</p>
+                    <div class="tool-install">
+                        <code>brew install --cask busycal</code>
+                        <button class="copy-btn" onclick="copyText(this, 'brew install --cask busycal')"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BREWFILE -->
+        <section id="brewfile">
+            <div class="section-header">
+                <span class="section-num">08</span>
+                <h2>Brewfile</h2>
+            </div>
+            <p class="section-desc">Copy to ~/.Brewfile and run <code>brew bundle --global</code></p>
+
+            <div class="brewfile">
+                <div class="brewfile-header">
+                    <div class="brewfile-left">
+                        <div class="brewfile-dots"><span></span><span></span><span></span></div>
+                        ~/.Brewfile
+                    </div>
+                    <button class="copy-btn" onclick="copyBrewfile()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                </div>
+                <pre id="brewfile-content"><code><span class="comment"># CLI</span>
+brew "git"
+brew "gh"
+brew "eza"
+brew "bat"
+brew "zoxide"
+brew "fzf"
+brew "ripgrep"
+brew "fd"
+brew "delta"
+brew "tldr"
+brew "btop"
+brew "lazygit"
+brew "jq"
+brew "starship"
+
+<span class="comment"># Languages</span>
+brew "uv"
+brew "fnm"
+brew "oven-sh/bun/bun"
+brew "go"
+brew "rust"
+
+<span class="comment"># DevOps</span>
+brew "awscli"
+brew "terraform"
+brew "kubectl"
+brew "k9s"
+
+<span class="comment"># Terminal & Editors</span>
+cask "ghostty"
+cask "warp"
+cask "visual-studio-code"
+cask "cursor"
+cask "zed"
+
+<span class="comment"># AI</span>
+cask "claude"
+cask "chatgpt"
+
+<span class="comment"># Browsers</span>
+cask "zen-browser"
+cask "firefox"
+cask "google-chrome"
+
+<span class="comment"># Productivity</span>
+cask "raycast"
+cask "rectangle"
+cask "ice"
+cask "alt-tab"
+cask "stats"
+cask "numi"
+cask "maccy"
+cask "granola"
+
+<span class="comment"># Development</span>
+cask "docker"
+cask "tableplus"
+cask "bruno"
+cask "proxyman"
+cask "devutils"
+
+<span class="comment"># Notes & Calendar</span>
+cask "obsidian"
+cask "notion"
+cask "fantastical"
+cask "notion-calendar"
+
+<span class="comment"># Communication</span>
+cask "slack"
+cask "1password"
+
+<span class="comment"># Fonts</span>
+cask "font-jetbrains-mono-nerd-font"
+cask "font-fira-code-nerd-font"</code></pre>
+            </div>
+
+            <pre>
+                <div class="pre-header">
+                    <span class="pre-lang">bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg></button>
+                </div>
+<code><span class="cmd">brew</span> bundle <span class="flag">--global</span>
+<span class="cmd">curl</span> <span class="flag">-fsSL</span> https://claude.ai/install.sh | bash</code></pre>
+        </section>
+    </main>
+
+    <footer>
+        <p>> echo "Last updated December 2025" && exit 0</p>
+    </footer>
+
+    <script>
+        // Nav highlight on scroll
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-links a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                if (scrollY >= section.offsetTop - 100) current = section.id;
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+            });
+        });
+
+        // Copy functions
+        function copyText(btn, text) {
+            navigator.clipboard.writeText(text);
+            btn.classList.add('copied');
+            btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>';
+            setTimeout(() => {
+                btn.classList.remove('copied');
+                btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>';
+            }, 2000);
+        }
+
+        function copyCode(btn) {
+            const code = btn.closest('pre').querySelector('code').innerText;
+            copyText(btn, code);
+        }
+
+        function copyBrewfile() {
+            const content = document.getElementById('brewfile-content').innerText;
+            const btn = document.querySelector('.brewfile-header .copy-btn');
+            copyText(btn, content);
+        }
+    </script>
+</body>
+</html>
