@@ -11,6 +11,7 @@ import StarshipPage from "./content/starship";
 import ModernCliPage from "./content/modern-cli";
 import VSCodePage from "./content/vscode";
 import CursorPage from "./content/cursor";
+import PyCharmPage from "./content/pycharm";
 import ZedPage from "./content/zed";
 import RaycastPage from "./content/raycast";
 import RectanglePage from "./content/rectangle";
@@ -37,6 +38,7 @@ const toolPages: Record<string, React.ComponentType> = {
   "modern-cli": ModernCliPage,
   vscode: VSCodePage,
   cursor: CursorPage,
+  pycharm: PyCharmPage,
   zed: ZedPage,
   raycast: RaycastPage,
   rectangle: RectanglePage,
