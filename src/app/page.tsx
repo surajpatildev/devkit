@@ -111,7 +111,7 @@ export default function Home() {
                 installCommand={tool.installCommand}
                 tags={tool.tags}
                 glow={tool.glow}
-                detailSlug={tool.slug}
+                detailSlug={tool.hasDetailPage ? tool.slug : undefined}
               />
             ))}
           </ToolGrid>
@@ -216,7 +216,7 @@ export default function Home() {
                 installCommand={tool.installCommand}
                 tags={tool.tags}
                 glow={tool.glow}
-                detailSlug={tool.slug}
+                detailSlug={tool.hasDetailPage ? tool.slug : undefined}
               />
             ))}
           </ToolGrid>
@@ -314,7 +314,7 @@ export default function Home() {
                 downloadUrl={tool.downloadUrl}
                 tags={tool.tags}
                 glow={tool.glow}
-                detailSlug={tool.slug}
+                detailSlug={tool.hasDetailPage ? tool.slug : undefined}
               />
             ))}
           </ToolGrid>
@@ -338,7 +338,7 @@ export default function Home() {
                 downloadUrl={tool.downloadUrl}
                 tags={tool.tags}
                 glow={tool.glow}
-                detailSlug={tool.slug}
+                detailSlug={tool.hasDetailPage ? tool.slug : undefined}
               />
             ))}
           </ToolGrid>
@@ -362,7 +362,7 @@ export default function Home() {
                 downloadUrl={tool.downloadUrl}
                 tags={tool.tags}
                 glow={tool.glow}
-                detailSlug={tool.slug}
+                detailSlug={tool.hasDetailPage ? tool.slug : undefined}
               />
             ))}
           </ToolGrid>
@@ -386,7 +386,7 @@ export default function Home() {
                 downloadUrl={tool.downloadUrl}
                 tags={tool.tags}
                 glow={tool.glow}
-                detailSlug={tool.slug}
+                detailSlug={tool.hasDetailPage ? tool.slug : undefined}
               />
             ))}
           </ToolGrid>
@@ -410,7 +410,7 @@ export default function Home() {
                 downloadUrl={tool.downloadUrl}
                 tags={tool.tags}
                 glow={tool.glow}
-                detailSlug={tool.slug}
+                detailSlug={tool.hasDetailPage ? tool.slug : undefined}
               />
             ))}
           </ToolGrid>
@@ -445,7 +445,7 @@ export default function Home() {
                 downloadUrl={tool.downloadUrl}
                 tags={tool.tags}
                 glow={tool.glow}
-                detailSlug={tool.slug}
+                detailSlug={tool.hasDetailPage ? tool.slug : undefined}
               />
             ))}
           </ToolGrid>
