@@ -5,12 +5,14 @@ import { cn } from "@/lib/utils";
 import { Terminal, Github } from "lucide-react";
 
 const navItems = [
-  { href: "#quick-start", label: "Quick Start" },
+  { href: "#quick-start", label: "Start" },
+  { href: "#shell", label: "Shell" },
   { href: "#terminal", label: "Terminal" },
-  { href: "#ai", label: "AI Tools" },
-  { href: "#editors", label: "Editors" },
+  { href: "#ide", label: "IDEs" },
+  { href: "#browsers", label: "Browsers" },
+  { href: "#ai", label: "AI" },
   { href: "#productivity", label: "Productivity" },
-  { href: "#dev", label: "Dev Tools" },
+  { href: "#dev", label: "Dev" },
   { href: "#notes", label: "Notes" },
   { href: "#brewfile", label: "Brewfile" },
 ];

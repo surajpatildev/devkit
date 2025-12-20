@@ -3,8 +3,9 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { Copy, Check, ExternalLink } from "lucide-react";
+import { Copy, Check, ExternalLink, Download, ArrowRight } from "lucide-react";
 import { useState } from "react";
+import Link from "next/link";
 
 export type GlowColor =
   | "green"
@@ -25,9 +26,11 @@ interface ToolCardProps {
   name: string;
   href: string;
   description: string;
-  installCommand: string;
+  installCommand?: string;
+  downloadUrl?: string;
   tags: Tag[];
   glow?: GlowColor;
+  detailSlug?: string;
 }
 
 const tagStyles: Record<TagType, string> = {
@@ -52,16 +55,22 @@ export function ToolCard({
   href,
   description,
   installCommand,
+  downloadUrl,
   tags,
   glow = "green",
+  detailSlug,
 }: ToolCardProps) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
+    if (!installCommand) return;
     await navigator.clipboard.writeText(installCommand);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
+
+  const hasBrewCommand = !!installCommand;
+  const hasDownloadOnly = !installCommand && downloadUrl;
 
   return (
     <Card
@@ -112,28 +121,76 @@ export function ToolCard({
           {description}
         </p>
 
-        <div
-          className="flex items-center gap-2 bg-background/50 border border-border/50 rounded-lg px-3 py-2 cursor-pointer hover:border-primary/50 transition-colors"
-          onClick={handleCopy}
-        >
-          <code className="text-xs text-muted-foreground flex-1 overflow-hidden text-ellipsis whitespace-nowrap font-mono">
-            <span className="text-primary/60">$</span> {installCommand}
-          </code>
+        {/* Install Command (brew) */}
+        {hasBrewCommand && (
           <div
-            className={cn(
-              "p-1.5 rounded-md transition-all shrink-0",
-              copied
-                ? "text-primary bg-primary/10"
-                : "text-muted-foreground hover:text-primary"
-            )}
+            className="flex items-center gap-2 bg-background/50 border border-border/50 rounded-lg px-3 py-2 cursor-pointer hover:border-primary/50 transition-colors"
+            onClick={handleCopy}
           >
-            {copied ? (
-              <Check className="w-4 h-4" />
-            ) : (
-              <Copy className="w-4 h-4" />
+            <code className="text-xs text-muted-foreground flex-1 overflow-hidden text-ellipsis whitespace-nowrap font-mono">
+              <span className="text-primary/60">$</span> {installCommand}
+            </code>
+            <div
+              className={cn(
+                "p-1.5 rounded-md transition-all shrink-0",
+                copied
+                  ? "text-primary bg-primary/10"
+                  : "text-muted-foreground hover:text-primary"
+              )}
+            >
+              {copied ? (
+                <Check className="w-4 h-4" />
+              ) : (
+                <Copy className="w-4 h-4" />
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Download-only button */}
+        {hasDownloadOnly && (
+          <a
+            href={downloadUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 bg-primary/10 border border-primary/30 rounded-lg px-3 py-2 text-primary text-sm font-medium hover:bg-primary/20 transition-colors"
+          >
+            <Download className="w-4 h-4" />
+            Download from website
+          </a>
+        )}
+
+        {/* Footer with optional download link and detail page link */}
+        {(downloadUrl && hasBrewCommand) || detailSlug ? (
+          <div className="flex items-center justify-between mt-3 pt-3 border-t border-border/30">
+            {/* Alternative download link when brew is primary */}
+            {downloadUrl && hasBrewCommand && (
+              <a
+                href={downloadUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-muted-foreground hover:text-primary transition-colors flex items-center gap-1"
+              >
+                <Download className="w-3 h-3" />
+                or download
+              </a>
+            )}
+
+            {/* Spacer if no download link but has detail page */}
+            {!downloadUrl && detailSlug && <div />}
+
+            {/* Detail page link */}
+            {detailSlug && (
+              <Link
+                href={`/tools/${detailSlug}`}
+                className="text-xs text-primary hover:text-primary/80 transition-colors flex items-center gap-1 font-medium"
+              >
+                Setup Guide
+                <ArrowRight className="w-3 h-3" />
+              </Link>
             )}
           </div>
-        </div>
+        ) : null}
       </CardContent>
     </Card>
   );
