@@ -4,8 +4,11 @@ import { getToolBySlug, getToolsWithDetailPages } from "@/lib/tools";
 // Import all tool detail pages
 import GhosttyPage from "./content/ghostty";
 import WarpPage from "./content/warp";
+import TmuxPage from "./content/tmux";
+import LazygitPage from "./content/lazygit";
 import OhMyZshPage from "./content/oh-my-zsh";
 import StarshipPage from "./content/starship";
+import ModernCliPage from "./content/modern-cli";
 import VSCodePage from "./content/vscode";
 import CursorPage from "./content/cursor";
 import ZedPage from "./content/zed";
@@ -13,18 +16,23 @@ import RaycastPage from "./content/raycast";
 import RectanglePage from "./content/rectangle";
 import AeroSpacePage from "./content/aerospace";
 import ClaudeCodePage from "./content/claude-code";
+import GitHubCopilotPage from "./content/github-copilot";
 import ClaudeDesktopPage from "./content/claude-desktop";
 import GitPage from "./content/git";
 import UvPage from "./content/uv";
 import FnmPage from "./content/fnm";
 import DockerPage from "./content/docker";
+import OrbStackPage from "./content/orbstack";
 
 // Map slugs to components
 const toolPages: Record<string, React.ComponentType> = {
   ghostty: GhosttyPage,
   warp: WarpPage,
+  tmux: TmuxPage,
+  lazygit: LazygitPage,
   "oh-my-zsh": OhMyZshPage,
   starship: StarshipPage,
+  "modern-cli": ModernCliPage,
   vscode: VSCodePage,
   cursor: CursorPage,
   zed: ZedPage,
@@ -32,11 +40,13 @@ const toolPages: Record<string, React.ComponentType> = {
   rectangle: RectanglePage,
   aerospace: AeroSpacePage,
   "claude-code": ClaudeCodePage,
+  "github-copilot": GitHubCopilotPage,
   "claude-desktop": ClaudeDesktopPage,
   git: GitPage,
   uv: UvPage,
   fnm: FnmPage,
   docker: DockerPage,
+  orbstack: OrbStackPage,
 };
 
 export function generateStaticParams() {
