@@ -150,35 +150,357 @@ When generating code:
         </div>
       </DetailSection>
 
-      <DetailSection title="Essential Extensions">
+      <DetailSection title="Python Development Setup">
         <p className="text-muted-foreground mb-4">
-          Cursor is compatible with all VS Code extensions. Here are essentials:
+          Install these extensions for a complete Python development environment.
         </p>
 
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid md:grid-cols-2 gap-4 mb-6">
+          <ExtensionCard
+            name="Python"
+            id="ms-python.python"
+            description="Core Python support. IntelliSense, debugging, linting, Jupyter."
+            category="Python"
+          />
+          <ExtensionCard
+            name="Pylance"
+            id="ms-python.vscode-pylance"
+            description="Fast, feature-rich Python language server. Type checking, auto-imports."
+            category="Python"
+          />
+          <ExtensionCard
+            name="Ruff"
+            id="charliermarsh.ruff"
+            description="Blazing fast Python linter & formatter. Replaces flake8, isort, black."
+            category="Python"
+          />
+          <ExtensionCard
+            name="Python Debugger"
+            id="ms-python.debugpy"
+            description="Full debugging support with breakpoints, stepping, variable inspection."
+            category="Python"
+          />
+          <ExtensionCard
+            name="Jupyter"
+            id="ms-toolsai.jupyter"
+            description="Interactive notebooks in VS Code. Run cells, see outputs inline."
+            category="Python"
+          />
+          <ExtensionCard
+            name="Python Environment Manager"
+            id="donjayamanne.python-environment-manager"
+            description="Manage virtual environments, conda, and interpreters."
+            category="Python"
+          />
+          <ExtensionCard
+            name="autoDocstring"
+            id="njpwerner.autodocstring"
+            description="Generate Python docstrings automatically. Google, NumPy, Sphinx formats."
+            category="Python"
+          />
+          <ExtensionCard
+            name="Python Indent"
+            id="KevinRose.vsc-python-indent"
+            description="Correct Python indentation when pressing Enter."
+            category="Python"
+          />
+        </div>
+
+        <CodeBlock language="bash">
+          <Comment># Install Python extensions via CLI</Comment>
+          {"\n"}
+          <Cmd>cursor</Cmd> <Flag>--install-extension</Flag> ms-python.python
+          {"\n"}
+          <Cmd>cursor</Cmd> <Flag>--install-extension</Flag> ms-python.vscode-pylance
+          {"\n"}
+          <Cmd>cursor</Cmd> <Flag>--install-extension</Flag> charliermarsh.ruff
+          {"\n"}
+          <Cmd>cursor</Cmd> <Flag>--install-extension</Flag> ms-python.debugpy
+          {"\n"}
+          <Cmd>cursor</Cmd> <Flag>--install-extension</Flag> ms-toolsai.jupyter
+        </CodeBlock>
+      </DetailSection>
+
+      <DetailSection title="Node.js Development Setup">
+        <p className="text-muted-foreground mb-4">
+          Complete Node.js and TypeScript development environment.
+        </p>
+
+        <div className="grid md:grid-cols-2 gap-4 mb-6">
           <ExtensionCard
             name="ESLint"
             id="dbaeumer.vscode-eslint"
-            description="JavaScript/TypeScript linting."
+            description="JavaScript/TypeScript linting with auto-fix on save."
             category="JavaScript"
           />
           <ExtensionCard
             name="Prettier"
             id="esbenp.prettier-vscode"
-            description="Code formatter."
+            description="Code formatter for JS, TS, CSS, JSON, HTML, and more."
             category="Formatting"
           />
           <ExtensionCard
-            name="Python"
-            id="ms-python.python"
-            description="Python language support."
-            category="Python"
+            name="TypeScript Importer"
+            id="pmneo.tsimporter"
+            description="Auto-import TypeScript modules as you type."
+            category="TypeScript"
           />
+          <ExtensionCard
+            name="Pretty TypeScript Errors"
+            id="yoavbls.pretty-ts-errors"
+            description="Human-readable TypeScript errors with explanations."
+            category="TypeScript"
+          />
+          <ExtensionCard
+            name="npm Intellisense"
+            id="christian-kohler.npm-intellisense"
+            description="Autocomplete npm modules in import statements."
+            category="JavaScript"
+          />
+          <ExtensionCard
+            name="Path Intellisense"
+            id="christian-kohler.path-intellisense"
+            description="Autocomplete filenames in import paths."
+            category="Productivity"
+          />
+          <ExtensionCard
+            name="Auto Rename Tag"
+            id="formulahendry.auto-rename-tag"
+            description="Auto rename paired HTML/JSX tags."
+            category="HTML"
+          />
+          <ExtensionCard
+            name="ES7+ Snippets"
+            id="dsznajder.es7-react-redux-react-native-snippets"
+            description="React/Redux snippets for modern JavaScript."
+            category="React"
+          />
+        </div>
+
+        <CodeBlock language="bash">
+          <Comment># Install Node.js extensions via CLI</Comment>
+          {"\n"}
+          <Cmd>cursor</Cmd> <Flag>--install-extension</Flag> dbaeumer.vscode-eslint
+          {"\n"}
+          <Cmd>cursor</Cmd> <Flag>--install-extension</Flag> esbenp.prettier-vscode
+          {"\n"}
+          <Cmd>cursor</Cmd> <Flag>--install-extension</Flag> yoavbls.pretty-ts-errors
+          {"\n"}
+          <Cmd>cursor</Cmd> <Flag>--install-extension</Flag> christian-kohler.npm-intellisense
+          {"\n"}
+          <Cmd>cursor</Cmd> <Flag>--install-extension</Flag> christian-kohler.path-intellisense
+        </CodeBlock>
+      </DetailSection>
+
+      <DetailSection title="Essential Extensions">
+        <p className="text-muted-foreground mb-4">
+          Core extensions for any development workflow.
+        </p>
+
+        <div className="grid md:grid-cols-2 gap-4">
           <ExtensionCard
             name="GitLens"
             id="eamodio.gitlens"
-            description="Git superpowers."
+            description="Git superpowers. Blame, history, file changes, repository insights."
             category="Git"
+          />
+          <ExtensionCard
+            name="Error Lens"
+            id="usernamehw.errorlens"
+            description="Highlight errors and warnings inline in your code."
+            category="Productivity"
+          />
+          <ExtensionCard
+            name="Todo Tree"
+            id="Gruntfuggly.todo-tree"
+            description="Find and organize TODO, FIXME, and HACK comments."
+            category="Productivity"
+          />
+          <ExtensionCard
+            name="Docker"
+            id="ms-azuretools.vscode-docker"
+            description="Docker container management, Dockerfile support."
+            category="DevOps"
+          />
+          <ExtensionCard
+            name="REST Client"
+            id="humao.rest-client"
+            description="Send HTTP requests directly from .http files."
+            category="API"
+          />
+          <ExtensionCard
+            name="YAML"
+            id="redhat.vscode-yaml"
+            description="YAML language support with schema validation."
+            category="Config"
+          />
+          <ExtensionCard
+            name="dotenv"
+            id="mikestead.dotenv"
+            description="Syntax highlighting for .env files."
+            category="Config"
+          />
+          <ExtensionCard
+            name="EditorConfig"
+            id="EditorConfig.EditorConfig"
+            description="Consistent coding styles across editors."
+            category="Formatting"
+          />
+        </div>
+      </DetailSection>
+
+      <DetailSection title="Recommended Settings">
+        <p className="text-muted-foreground mb-4">
+          Complete settings.json for Python and Node.js development.
+          Access via Cmd+Shift+P → &quot;Open User Settings (JSON)&quot;.
+        </p>
+
+        <ConfigBlock filename="settings.json">
+{`{
+  // Editor
+  "editor.fontSize": 14,
+  "editor.fontFamily": "JetBrains Mono, Menlo, monospace",
+  "editor.fontLigatures": true,
+  "editor.lineHeight": 1.6,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.wordWrap": "on",
+  "editor.minimap.enabled": false,
+  "editor.smoothScrolling": true,
+  "editor.cursorBlinking": "smooth",
+  "editor.cursorSmoothCaretAnimation": "on",
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": true,
+  "editor.stickyScroll.enabled": true,
+  "editor.inlineSuggest.enabled": true,
+  "editor.linkedEditing": true,
+
+  // Auto-save and formatting
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 1000,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit"
+  },
+
+  // Terminal
+  "terminal.integrated.fontFamily": "JetBrains Mono",
+  "terminal.integrated.fontSize": 13,
+
+  // Files
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/node_modules": true,
+    "**/__pycache__": true,
+    "**/.pytest_cache": true,
+    "**/.mypy_cache": true,
+    "**/.ruff_cache": true,
+    "**/*.pyc": true,
+    "**/.venv": true
+  },
+
+  // Python
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.tabSize": 4,
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.ruff": "explicit",
+      "source.organizeImports.ruff": "explicit"
+    }
+  },
+  "python.analysis.typeCheckingMode": "basic",
+  "python.analysis.autoImportCompletions": true,
+  "python.analysis.inlayHints.functionReturnTypes": true,
+  "python.analysis.inlayHints.variableTypes": true,
+  "python.testing.pytestEnabled": true,
+  "python.testing.unittestEnabled": false,
+
+  // Ruff (Python)
+  "ruff.lint.run": "onSave",
+  "ruff.format.args": ["--line-length=88"],
+
+  // JavaScript / TypeScript
+  "[javascript][typescript][typescriptreact][javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2
+  },
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "typescript.suggest.autoImports": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+
+  // JSON
+  "[json][jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  // Prettier
+  "prettier.semi": true,
+  "prettier.singleQuote": false,
+  "prettier.trailingComma": "es5",
+  "prettier.printWidth": 80,
+
+  // ESLint
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+
+  // Git
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  "git.enableSmartCommit": true,
+
+  // Search
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/.git": true,
+    "**/.venv": true,
+    "**/__pycache__": true
+  },
+
+  // Workbench
+  "workbench.startupEditor": "none",
+  "workbench.colorTheme": "Catppuccin Mocha",
+  "workbench.iconTheme": "catppuccin-mocha",
+  "workbench.editor.enablePreview": false
+}`}
+        </ConfigBlock>
+      </DetailSection>
+
+      <DetailSection title="Themes & Icons">
+        <div className="grid md:grid-cols-2 gap-4">
+          <ExtensionCard
+            name="Catppuccin"
+            id="Catppuccin.catppuccin-vsc"
+            description="Soothing pastel theme. Mocha, Macchiato, Frappé, Latte flavors."
+            category="Theme"
+          />
+          <ExtensionCard
+            name="Catppuccin Icons"
+            id="Catppuccin.catppuccin-vsc-icons"
+            description="Matching file icons for Catppuccin theme."
+            category="Icons"
+          />
+          <ExtensionCard
+            name="One Dark Pro"
+            id="zhuangtongfa.material-theme"
+            description="Atom One Dark theme. Very popular choice."
+            category="Theme"
+          />
+          <ExtensionCard
+            name="Material Icon Theme"
+            id="PKief.material-icon-theme"
+            description="File and folder icons for all languages."
+            category="Icons"
           />
         </div>
       </DetailSection>

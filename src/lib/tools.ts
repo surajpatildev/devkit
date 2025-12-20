@@ -212,6 +212,23 @@ export const ideTools: Tool[] = [
     hasDetailPage: true,
   },
   {
+    slug: "pycharm",
+    name: "PyCharm",
+    description: "The most intelligent Python IDE. Deep code understanding, refactoring, debugging, testing.",
+    href: "https://jetbrains.com/pycharm",
+    category: "ide",
+    installMethod: "brew-cask",
+    installCommand: "brew install --cask pycharm",
+    downloadUrl: "https://jetbrains.com/pycharm/download",
+    tags: [
+      { type: "free", label: "Community" },
+      { type: "paid", label: "Pro $249/yr" },
+      { type: "recommended", label: "Recommended" },
+    ],
+    glow: "green",
+    hasDetailPage: true,
+  },
+  {
     slug: "zed",
     name: "Zed",
     description: "High-performance editor from Atom creators. Native Mac, extremely fast. Built-in AI.",
