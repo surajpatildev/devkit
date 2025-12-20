@@ -177,7 +177,8 @@ export function ConfigBlock({
     if (!node) return "";
     if (Array.isArray(node)) return node.map(extractText).join("");
     if (typeof node === "object" && "props" in node) {
-      return extractText(node.props.children);
+      const nodeWithProps = node as { props: { children: React.ReactNode } };
+      return extractText(nodeWithProps.props.children);
     }
     return "";
   };
