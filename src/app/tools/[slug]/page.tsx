@@ -23,9 +23,11 @@ import UvPage from "./content/uv";
 import FnmPage from "./content/fnm";
 import DockerPage from "./content/docker";
 import OrbStackPage from "./content/orbstack";
+import ConfigPage from "./content/config";
 
 // Map slugs to components
 const toolPages: Record<string, React.ComponentType> = {
+  config: ConfigPage,
   ghostty: GhosttyPage,
   warp: WarpPage,
   tmux: TmuxPage,

@@ -114,6 +114,20 @@ export const terminalTools: Tool[] = [
 
 export const shellTools: Tool[] = [
   {
+    slug: "config",
+    name: "Complete Configuration",
+    description: "All dotfiles in one place. Optimized configs for Zsh, Ghostty, Starship, and Git with Catppuccin Mocha theme.",
+    href: "https://github.com/catppuccin/catppuccin",
+    category: "shell",
+    installMethod: "brew",
+    installCommand: "brew install font-jetbrains-mono-nerd-font",
+    tags: [
+      { type: "recommended", label: "Start Here" },
+    ],
+    glow: "purple",
+    hasDetailPage: true,
+  },
+  {
     slug: "oh-my-zsh",
     name: "Oh My Zsh",
     description: "Framework for managing Zsh configuration. Thousands of plugins and themes. Essential for shell productivity.",
