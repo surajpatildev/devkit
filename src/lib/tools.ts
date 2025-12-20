@@ -150,7 +150,7 @@ export const shellTools: Tool[] = [
     name: "Modern CLI Tools",
     description: "Rust-powered replacements for cat, ls, grep, find. bat, eza, ripgrep, fd, fzf, zoxide. 10-100x faster.",
     href: "https://github.com/ibraheemdev/modern-unix",
-    category: "shell",
+    category: "terminal",
     installMethod: "brew",
     installCommand: "brew install bat eza ripgrep fd fzf zoxide tldr",
     tags: [

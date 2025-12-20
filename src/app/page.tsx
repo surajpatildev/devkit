@@ -116,21 +116,6 @@ export default function Home() {
             ))}
           </ToolGrid>
 
-          <SubSection title="Essential Plugins">
-            <CodeBlock language="bash">
-              <Comment># Install zsh plugins</Comment>
-              {"\n"}
-              <Cmd>git</Cmd> clone
-              https://github.com/zsh-users/zsh-autosuggestions{" "}
-              {"${ZSH_CUSTOM:-~/.oh-my-zsh/custom}"}/plugins/zsh-autosuggestions
-              {"\n"}
-              <Cmd>git</Cmd> clone
-              https://github.com/zsh-users/zsh-syntax-highlighting{" "}
-              {"${ZSH_CUSTOM:-~/.oh-my-zsh/custom}"}
-              /plugins/zsh-syntax-highlighting
-            </CodeBlock>
-          </SubSection>
-
           <SubSection title="Complete .zshrc Configuration">
             <TerminalWindow filename="~/.zshrc">
               <Comment># Path to Oh My Zsh installation</Comment>
@@ -220,80 +205,6 @@ export default function Home() {
               />
             ))}
           </ToolGrid>
-
-          <SubSection title="Modern CLI Replacements">
-            <DataTable
-              columns={[
-                { header: "Tool", key: "tool" },
-                { header: "Replaces", key: "replaces" },
-                { header: "Why better", key: "why" },
-              ]}
-              data={[
-                {
-                  tool: <strong className="text-foreground">eza</strong>,
-                  replaces: "ls",
-                  why: "Icons, git status, tree view",
-                },
-                {
-                  tool: <strong className="text-foreground">bat</strong>,
-                  replaces: "cat",
-                  why: "Syntax highlighting, line numbers",
-                },
-                {
-                  tool: <strong className="text-foreground">zoxide</strong>,
-                  replaces: "cd",
-                  why: (
-                    <>
-                      Learns habits.{" "}
-                      <code className="text-muted-foreground bg-muted/50 px-1.5 py-0.5 rounded text-xs">
-                        z proj
-                      </code>{" "}
-                      jumps to ~/Developer/project
-                    </>
-                  ),
-                },
-                {
-                  tool: <strong className="text-foreground">ripgrep</strong>,
-                  replaces: "grep",
-                  why: "10x faster, respects .gitignore",
-                },
-                {
-                  tool: <strong className="text-foreground">fd</strong>,
-                  replaces: "find",
-                  why: (
-                    <>
-                      Simple:{" "}
-                      <code className="text-muted-foreground bg-muted/50 px-1.5 py-0.5 rounded text-xs">
-                        fd &quot;\.py$&quot;
-                      </code>
-                    </>
-                  ),
-                },
-                {
-                  tool: <strong className="text-foreground">fzf</strong>,
-                  replaces: "—",
-                  why: "Fuzzy finder for files, history, everything",
-                },
-                {
-                  tool: <strong className="text-foreground">delta</strong>,
-                  replaces: "diff",
-                  why: "Beautiful git diffs with syntax highlighting",
-                },
-                {
-                  tool: <strong className="text-foreground">lazygit</strong>,
-                  replaces: "git cli",
-                  why: "TUI for git - visual staging, rebasing",
-                },
-              ]}
-            />
-          </SubSection>
-
-          <CodeBlock language="bash">
-            <Comment># Install all CLI tools</Comment>
-            {"\n"}
-            <Cmd>brew</Cmd> install eza bat zoxide ripgrep fd fzf delta tldr btop
-            lazygit
-          </CodeBlock>
         </Section>
 
         {/* 04 - IDEs & EDITORS */}
