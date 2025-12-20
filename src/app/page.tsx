@@ -117,38 +117,58 @@ export default function Home() {
           </ToolGrid>
 
           <SubSection title="Complete .zshrc Configuration">
+            <p className="text-sm text-muted-foreground mb-4">
+              Copy this entire config block to your <code className="text-primary">~/.zshrc</code> file. This is the complete setup for shell configuration, aliases, and tool initialization. No other places on this guide need to be added separately.
+            </p>
             <TerminalWindow filename="~/.zshrc">
-              <Comment># Path to Oh My Zsh installation</Comment>
+              <Comment># ============================================================================</Comment>
+              {"\n"}
+              <Comment># OH MY ZSH CONFIGURATION</Comment>
+              {"\n"}
+              <Comment># ============================================================================</Comment>
               {"\n"}
               export ZSH=&quot;$HOME/.oh-my-zsh&quot;{"\n\n"}
-              <Comment>
-                # Use minimal theme (Starship handles the prompt)
-              </Comment>
+              <Comment># Use minimal theme - Starship prompt handles all the styling</Comment>
               {"\n"}
               ZSH_THEME=&quot;&quot;{"\n\n"}
-              <Comment># Plugins</Comment>
+              <Comment># Essential plugins for productivity</Comment>
               {"\n"}
               plugins=(git zsh-autosuggestions zsh-syntax-highlighting){"\n\n"}
               source $ZSH/oh-my-zsh.sh{"\n\n"}
-              <Comment># Homebrew</Comment>
+              <Comment># ============================================================================</Comment>
+              {"\n"}
+              <Comment># HOMEBREW & ENVIRONMENT</Comment>
+              {"\n"}
+              <Comment># ============================================================================</Comment>
               {"\n"}
               eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;{"\n\n"}
-              <Comment># Modern CLI aliases</Comment>
+              export EDITOR=&quot;code --wait&quot;{"\n"}
+              export VISUAL=&quot;$EDITOR&quot;{"\n\n"}
+              <Comment># ============================================================================</Comment>
+              {"\n"}
+              <Comment># COMMAND ALIASES - Modern CLI replacements</Comment>
+              {"\n"}
+              <Comment># ============================================================================</Comment>
               {"\n"}
               alias ls=&quot;eza --color=always --icons=always --git&quot;{"\n"}
               alias ll=&quot;eza -la --icons=always --git&quot;{"\n"}
               alias tree=&quot;eza --tree --icons=always&quot;{"\n"}
-              alias cat=&quot;bat --paging=never&quot;{"\n\n"}
-              <Comment># Tool initializations</Comment>
+              alias cat=&quot;bat --paging=never&quot;{"\n"}
+              alias grep=&quot;rg&quot;{"\n"}
+              alias find=&quot;fd&quot;{"\n\n"}
+              <Comment># ============================================================================</Comment>
               {"\n"}
-              eval &quot;$(starship init zsh)&quot;{"\n"}
-              eval &quot;$(zoxide init zsh)&quot;{"\n"}
-              eval &quot;$(fzf --zsh)&quot;{"\n"}
-              eval &quot;$(fnm env --use-on-cd)&quot;{"\n\n"}
-              <Comment># Editor</Comment>
+              <Comment># TOOL INITIALIZATION - DO NOT REMOVE OR MODIFY THESE</Comment>
               {"\n"}
-              export EDITOR=&quot;code --wait&quot;{"\n"}
-              export VISUAL=&quot;$EDITOR&quot;
+              <Comment># ============================================================================</Comment>
+              {"\n"}
+              eval &quot;$(starship init zsh)&quot;          <Comment># Prompt styling</Comment>
+              {"\n"}
+              eval &quot;$(zoxide init zsh)&quot;           <Comment># Smart directory jumping</Comment>
+              {"\n"}
+              eval &quot;$(fzf --zsh)&quot;                <Comment># Fuzzy finder keybindings</Comment>
+              {"\n"}
+              eval &quot;$(fnm env --use-on-cd)&quot;       <Comment># Node version manager</Comment>
             </TerminalWindow>
           </SubSection>
 
@@ -327,11 +347,7 @@ export default function Home() {
           </ToolGrid>
 
           <CodeBlock language="bash">
-            <Comment># fnm setup - add to ~/.zshrc</Comment>
-            {"\n"}
-            <Cmd>eval</Cmd> <Str>&quot;$(fnm env --use-on-cd)&quot;</Str>
-            {"\n\n"}
-            <Comment># Install Node LTS</Comment>
+            <Comment># Install Node LTS with fnm</Comment>
             {"\n"}
             <Cmd>fnm</Cmd> install 22{"\n"}
             <Cmd>fnm</Cmd> default 22{"\n\n"}
