@@ -36,18 +36,101 @@ export default function RaycastPage() {
           ]}
         />
 
+      </DetailSection>
+
+      <DetailSection title="Replace Spotlight with Raycast">
+        <p className="text-muted-foreground mb-4">
+          To use Cmd+Space for Raycast instead of Spotlight, follow these steps:
+        </p>
+
+        <div className="space-y-3 mb-4">
+          <div className="flex gap-3">
+            <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center">1</span>
+            <p className="text-sm text-muted-foreground">
+              Open <strong className="text-foreground">System Settings</strong> → <strong className="text-foreground">Keyboard</strong> → <strong className="text-foreground">Keyboard Shortcuts</strong>
+            </p>
+          </div>
+          <div className="flex gap-3">
+            <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center">2</span>
+            <p className="text-sm text-muted-foreground">
+              Click <strong className="text-foreground">Spotlight</strong> in the sidebar
+            </p>
+          </div>
+          <div className="flex gap-3">
+            <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center">3</span>
+            <p className="text-sm text-muted-foreground">
+              Uncheck or change the shortcut for <strong className="text-foreground">&quot;Show Spotlight search&quot;</strong> (Cmd+Space)
+            </p>
+          </div>
+          <div className="flex gap-3">
+            <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center">4</span>
+            <p className="text-sm text-muted-foreground">
+              Open <strong className="text-foreground">Raycast Settings</strong> → <strong className="text-foreground">General</strong> → Set Raycast Hotkey to <strong className="text-foreground">Cmd+Space</strong>
+            </p>
+          </div>
+        </div>
+
         <Tip>
-          After installing, set Raycast as your default launcher: System Settings →
-          Keyboard → Shortcuts → Spotlight → Change Cmd+Space to Raycast.
+          You can also disable Spotlight entirely via System Settings → Siri &amp; Spotlight
+          if you want Raycast to handle all searches.
         </Tip>
       </DetailSection>
 
-      <DetailSection title="Essential Extensions">
+      <DetailSection title="Recommended Extensions">
         <p className="text-muted-foreground mb-4">
-          Install extensions from the Raycast Store (open Raycast → Store).
+          Install extensions from the Raycast Store (open Raycast → type &quot;Store&quot;).
         </p>
 
-        <div className="grid md:grid-cols-2 gap-4">
+        <h4 className="font-medium text-foreground mb-3 mt-6">Browser Integration</h4>
+        <div className="grid md:grid-cols-2 gap-4 mb-6">
+          <div className="bg-card/50 border border-border/50 rounded-lg p-4">
+            <h4 className="font-medium text-foreground mb-2">Zen Browser</h4>
+            <p className="text-sm text-muted-foreground">
+              Search and open tabs, bookmarks, and history from Zen Browser. Perfect if you use
+              Zen as your daily driver.
+            </p>
+          </div>
+
+          <div className="bg-card/50 border border-border/50 rounded-lg p-4">
+            <h4 className="font-medium text-foreground mb-2">Helium</h4>
+            <p className="text-sm text-muted-foreground">
+              Navigate tabs, bookmarks, and search the web in the lightweight Helium browser.
+              Open-source Chromium-based browser integration.
+            </p>
+          </div>
+
+          <div className="bg-card/50 border border-border/50 rounded-lg p-4">
+            <h4 className="font-medium text-foreground mb-2">Browser Bookmarks</h4>
+            <p className="text-sm text-muted-foreground">
+              Search bookmarks across Chrome, Safari, Firefox, Arc, and more from one place.
+            </p>
+          </div>
+
+          <div className="bg-card/50 border border-border/50 rounded-lg p-4">
+            <h4 className="font-medium text-foreground mb-2">Browser Tabs</h4>
+            <p className="text-sm text-muted-foreground">
+              Search and switch between tabs across all your open browsers.
+            </p>
+          </div>
+        </div>
+
+        <h4 className="font-medium text-foreground mb-3">Developer Must-Haves</h4>
+        <div className="grid md:grid-cols-2 gap-4 mb-6">
+          <div className="bg-card/50 border border-border/50 rounded-lg p-4">
+            <h4 className="font-medium text-foreground mb-2">Port Manager</h4>
+            <p className="text-sm text-muted-foreground">
+              List open ports and kill processes using them. Essential for web development
+              when ports get stuck. Also shows in menu bar.
+            </p>
+          </div>
+
+          <div className="bg-card/50 border border-border/50 rounded-lg p-4">
+            <h4 className="font-medium text-foreground mb-2">Kill Port</h4>
+            <p className="text-sm text-muted-foreground">
+              Quickly release a port by typing the port number. Faster than lsof + kill.
+            </p>
+          </div>
+
           <div className="bg-card/50 border border-border/50 rounded-lg p-4">
             <h4 className="font-medium text-foreground mb-2">GitHub</h4>
             <p className="text-sm text-muted-foreground">
@@ -56,12 +139,43 @@ export default function RaycastPage() {
           </div>
 
           <div className="bg-card/50 border border-border/50 rounded-lg p-4">
-            <h4 className="font-medium text-foreground mb-2">Linear</h4>
+            <h4 className="font-medium text-foreground mb-2">Visual Studio Code</h4>
             <p className="text-sm text-muted-foreground">
-              Create and search issues. Update status. Perfect for quick task management.
+              Open recent projects. Search workspaces. Launch directly.
             </p>
           </div>
 
+          <div className="bg-card/50 border border-border/50 rounded-lg p-4">
+            <h4 className="font-medium text-foreground mb-2">Tailwind CSS</h4>
+            <p className="text-sm text-muted-foreground">
+              Search Tailwind classes, colors, and documentation. Great for quick lookups.
+            </p>
+          </div>
+
+          <div className="bg-card/50 border border-border/50 rounded-lg p-4">
+            <h4 className="font-medium text-foreground mb-2">JSON to TypeScript</h4>
+            <p className="text-sm text-muted-foreground">
+              Paste JSON and get TypeScript interfaces instantly. Huge time saver.
+            </p>
+          </div>
+
+          <div className="bg-card/50 border border-border/50 rounded-lg p-4">
+            <h4 className="font-medium text-foreground mb-2">Brew</h4>
+            <p className="text-sm text-muted-foreground">
+              Search and install Homebrew packages directly from Raycast.
+            </p>
+          </div>
+
+          <div className="bg-card/50 border border-border/50 rounded-lg p-4">
+            <h4 className="font-medium text-foreground mb-2">Vercel</h4>
+            <p className="text-sm text-muted-foreground">
+              Deploy and manage Vercel projects. Check deployment status and logs.
+            </p>
+          </div>
+        </div>
+
+        <h4 className="font-medium text-foreground mb-3">Productivity</h4>
+        <div className="grid md:grid-cols-2 gap-4">
           <div className="bg-card/50 border border-border/50 rounded-lg p-4">
             <h4 className="font-medium text-foreground mb-2">1Password</h4>
             <p className="text-sm text-muted-foreground">
@@ -77,16 +191,30 @@ export default function RaycastPage() {
           </div>
 
           <div className="bg-card/50 border border-border/50 rounded-lg p-4">
-            <h4 className="font-medium text-foreground mb-2">Brew</h4>
+            <h4 className="font-medium text-foreground mb-2">Linear</h4>
             <p className="text-sm text-muted-foreground">
-              Search and install Homebrew packages directly from Raycast.
+              Create and search issues. Update status. Perfect for quick task management.
             </p>
           </div>
 
           <div className="bg-card/50 border border-border/50 rounded-lg p-4">
-            <h4 className="font-medium text-foreground mb-2">Visual Studio Code</h4>
+            <h4 className="font-medium text-foreground mb-2">Todoist</h4>
             <p className="text-sm text-muted-foreground">
-              Open recent projects. Search workspaces. Launch directly.
+              Create tasks, check due items, and manage your todo list without context switching.
+            </p>
+          </div>
+
+          <div className="bg-card/50 border border-border/50 rounded-lg p-4">
+            <h4 className="font-medium text-foreground mb-2">TinyPNG</h4>
+            <p className="text-sm text-muted-foreground">
+              Compress images directly from Raycast. Select images and shrink them instantly.
+            </p>
+          </div>
+
+          <div className="bg-card/50 border border-border/50 rounded-lg p-4">
+            <h4 className="font-medium text-foreground mb-2">Speedtest</h4>
+            <p className="text-sm text-muted-foreground">
+              Check your internet speed without opening a browser. Quick and simple.
             </p>
           </div>
         </div>
