@@ -94,27 +94,46 @@ export default function Home() {
           </CodeBlock>
         </Section>
 
-        {/* 02 - SHELL SETUP */}
+        {/* 02 - TERMINAL & SHELL */}
         <Section
-          id="shell"
+          id="terminal"
           number="02"
-          title="Shell Setup"
-          description="Configure your terminal environment with Oh My Zsh, Starship, and essential tools."
+          title="Terminal & Shell"
+          description="Terminal emulators, shell configuration, and modern CLI tools for a productive command-line experience."
         >
-          <ToolGrid>
-            {getToolsByCategory("shell").map((tool) => (
-              <ToolCard
-                key={tool.slug}
-                name={tool.name}
-                href={tool.href}
-                description={tool.description}
-                installCommand={tool.installCommand}
-                tags={tool.tags}
-                glow={tool.glow}
-                detailSlug={tool.hasDetailPage ? tool.slug : undefined}
-              />
-            ))}
-          </ToolGrid>
+          <SubSection title="Terminal Emulators">
+            <ToolGrid>
+              {getToolsByCategory("terminal").map((tool) => (
+                <ToolCard
+                  key={tool.slug}
+                  name={tool.name}
+                  href={tool.href}
+                  description={tool.description}
+                  installCommand={tool.installCommand}
+                  tags={tool.tags}
+                  glow={tool.glow}
+                  detailSlug={tool.hasDetailPage ? tool.slug : undefined}
+                />
+              ))}
+            </ToolGrid>
+          </SubSection>
+
+          <SubSection title="Shell Framework & Prompt">
+            <ToolGrid>
+              {getToolsByCategory("shell").map((tool) => (
+                <ToolCard
+                  key={tool.slug}
+                  name={tool.name}
+                  href={tool.href}
+                  description={tool.description}
+                  installCommand={tool.installCommand}
+                  tags={tool.tags}
+                  glow={tool.glow}
+                  detailSlug={tool.hasDetailPage ? tool.slug : undefined}
+                />
+              ))}
+            </ToolGrid>
+          </SubSection>
 
           <SubSection title="Complete .zshrc Configuration">
             <p className="text-sm text-muted-foreground mb-4">
@@ -204,33 +223,10 @@ export default function Home() {
           </SubSection>
         </Section>
 
-        {/* 03 - TERMINAL */}
-        <Section
-          id="terminal"
-          number="03"
-          title="Terminal"
-          description="Modern terminal emulators and CLI tools that replace outdated defaults."
-        >
-          <ToolGrid>
-            {getToolsByCategory("terminal").map((tool) => (
-              <ToolCard
-                key={tool.slug}
-                name={tool.name}
-                href={tool.href}
-                description={tool.description}
-                installCommand={tool.installCommand}
-                tags={tool.tags}
-                glow={tool.glow}
-                detailSlug={tool.hasDetailPage ? tool.slug : undefined}
-              />
-            ))}
-          </ToolGrid>
-        </Section>
-
-        {/* 04 - IDEs & EDITORS */}
+        {/* 03 - IDEs & EDITORS */}
         <Section
           id="ide"
-          number="04"
+          number="03"
           title="IDEs & Editors"
           description="Code editors with AI integration, extensions, and powerful features."
         >
@@ -251,10 +247,10 @@ export default function Home() {
           </ToolGrid>
         </Section>
 
-        {/* 05 - BROWSERS */}
+        {/* 04 - BROWSERS */}
         <Section
           id="browsers"
-          number="05"
+          number="04"
           title="Browsers"
           description="Modern browsers for development and daily use."
         >
@@ -275,10 +271,10 @@ export default function Home() {
           </ToolGrid>
         </Section>
 
-        {/* 06 - AI TOOLS */}
+        {/* 05 - AI TOOLS */}
         <Section
           id="ai"
-          number="06"
+          number="05"
           title="AI Tools"
           description="Coding agents and AI assistants to supercharge your development."
         >
@@ -299,10 +295,10 @@ export default function Home() {
           </ToolGrid>
         </Section>
 
-        {/* 07 - PRODUCTIVITY */}
+        {/* 06 - PRODUCTIVITY */}
         <Section
           id="productivity"
-          number="07"
+          number="06"
           title="Productivity"
           description="Window management, launchers, dictation, and utilities."
         >
@@ -323,10 +319,10 @@ export default function Home() {
           </ToolGrid>
         </Section>
 
-        {/* 08 - DEV TOOLS */}
+        {/* 07 - DEV TOOLS */}
         <Section
           id="dev"
-          number="08"
+          number="07"
           title="Dev Tools"
           description="Language managers, containers, API clients, and development utilities."
         >
@@ -359,8 +355,8 @@ export default function Home() {
           </CodeBlock>
         </Section>
 
-        {/* 09 - NOTES & CALENDAR */}
-        <Section id="notes" number="09" title="Notes & Calendar">
+        {/* 08 - NOTES & CALENDAR */}
+        <Section id="notes" number="08" title="Notes & Calendar">
           <ToolGrid>
             {getToolsByCategory("notes").map((tool) => (
               <ToolCard
@@ -376,6 +372,168 @@ export default function Home() {
               />
             ))}
           </ToolGrid>
+        </Section>
+
+        {/* 09 - COMPLETE CONFIGURATION FILES */}
+        <Section
+          id="config"
+          number="09"
+          title="Complete Configuration Files"
+          description="All configuration files in one place. Copy these to set up your entire development environment with consistent theming."
+        >
+          <SubSection title="Recommended Defaults">
+            <div className="bg-card/50 border border-border/50 rounded-lg p-4 mb-6">
+              <div className="grid md:grid-cols-3 gap-4 text-sm">
+                <div>
+                  <span className="text-muted-foreground">Font:</span>
+                  <span className="text-foreground ml-2">JetBrains Mono Nerd Font</span>
+                </div>
+                <div>
+                  <span className="text-muted-foreground">Theme:</span>
+                  <span className="text-foreground ml-2">Catppuccin Mocha</span>
+                </div>
+                <div>
+                  <span className="text-muted-foreground">Font Size:</span>
+                  <span className="text-foreground ml-2">14px</span>
+                </div>
+              </div>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              These defaults ensure a consistent look across your terminal, prompt, and git tools.
+              Install the font first: <code className="text-primary">brew install font-jetbrains-mono-nerd-font</code>
+            </p>
+          </SubSection>
+
+          <SubSection title="Ghostty Terminal">
+            <p className="text-sm text-muted-foreground mb-4">
+              Copy to <code className="text-primary">~/.config/ghostty/config</code>
+            </p>
+            <TerminalWindow filename="~/.config/ghostty/config">
+              <Comment># Font - Use Nerd Font for icons</Comment>
+              {"\n"}
+              font-family = &quot;JetBrains Mono Nerd Font&quot;{"\n"}
+              font-size = 14{"\n"}
+              font-thicken = true{"\n\n"}
+              <Comment># Theme - Catppuccin Mocha for consistency</Comment>
+              {"\n"}
+              theme = catppuccin-mocha{"\n"}
+              background-opacity = 0.95{"\n\n"}
+              <Comment># Window</Comment>
+              {"\n"}
+              window-padding-x = 12{"\n"}
+              window-padding-y = 8{"\n"}
+              window-decoration = true{"\n"}
+              macos-titlebar-style = tabs{"\n\n"}
+              <Comment># Cursor</Comment>
+              {"\n"}
+              cursor-style = block{"\n"}
+              cursor-style-blink = false{"\n\n"}
+              <Comment># Shell integration</Comment>
+              {"\n"}
+              shell-integration = zsh{"\n"}
+              shell-integration-features = cursor,sudo,title{"\n\n"}
+              <Comment># Behavior</Comment>
+              {"\n"}
+              mouse-hide-while-typing = true{"\n"}
+              copy-on-select = clipboard{"\n"}
+              scrollback-limit = 10000{"\n\n"}
+              <Comment># Fix Ctrl+Enter for some apps</Comment>
+              {"\n"}
+              keybind = ctrl+enter=text:\x1b[13;5u
+            </TerminalWindow>
+          </SubSection>
+
+          <SubSection title="Starship Prompt">
+            <p className="text-sm text-muted-foreground mb-4">
+              Copy to <code className="text-primary">~/.config/starship.toml</code>
+            </p>
+            <TerminalWindow filename="~/.config/starship.toml">
+              <Comment># Minimal, fast prompt configuration</Comment>
+              {"\n"}
+              add_newline = true{"\n"}
+              command_timeout = 1000{"\n\n"}
+              <Comment># Clean format - shows only what matters</Comment>
+              {"\n"}
+              format = &quot;&quot;&quot;{"\n"}
+              $directory\{"\n"}
+              $git_branch\{"\n"}
+              $git_status\{"\n"}
+              $python\{"\n"}
+              $nodejs\{"\n"}
+              $line_break\{"\n"}
+              $character&quot;&quot;&quot;{"\n\n"}
+              <Comment># Directory - Catppuccin Mocha blue</Comment>
+              {"\n"}
+              [directory]{"\n"}
+              truncation_length = 3{"\n"}
+              truncate_to_repo = true{"\n"}
+              style = &quot;bold #89b4fa&quot;{"\n\n"}
+              <Comment># Git branch - Catppuccin Mocha mauve</Comment>
+              {"\n"}
+              [git_branch]{"\n"}
+              symbol = &quot; &quot;{"\n"}
+              style = &quot;bold #cba6f7&quot;{"\n\n"}
+              <Comment># Git status - Catppuccin Mocha red</Comment>
+              {"\n"}
+              [git_status]{"\n"}
+              style = &quot;bold #f38ba8&quot;{"\n"}
+              format = &quot;([$all_status$ahead_behind]($style) )&quot;{"\n\n"}
+              <Comment># Python - Catppuccin Mocha yellow</Comment>
+              {"\n"}
+              [python]{"\n"}
+              symbol = &quot; &quot;{"\n"}
+              style = &quot;bold #f9e2af&quot;{"\n"}
+              format = &quot;[$symbol$pyenv_prefix($version)]($style) &quot;{"\n\n"}
+              <Comment># Node.js - Catppuccin Mocha green</Comment>
+              {"\n"}
+              [nodejs]{"\n"}
+              symbol = &quot; &quot;{"\n"}
+              style = &quot;bold #a6e3a1&quot;{"\n"}
+              format = &quot;[$symbol($version)]($style) &quot;{"\n\n"}
+              <Comment># Prompt character</Comment>
+              {"\n"}
+              [character]{"\n"}
+              success_symbol = &quot;[❯](#a6e3a1)&quot;{"\n"}
+              error_symbol = &quot;[❯](#f38ba8)&quot;
+            </TerminalWindow>
+          </SubSection>
+
+          <SubSection title="Git Configuration">
+            <p className="text-sm text-muted-foreground mb-4">
+              Run these commands or add to <code className="text-primary">~/.gitconfig</code>
+            </p>
+            <TerminalWindow filename="~/.gitconfig">
+              [user]{"\n"}
+              {"    "}name = Your Name{"\n"}
+              {"    "}email = your@email.com{"\n\n"}
+              [init]{"\n"}
+              {"    "}defaultBranch = main{"\n\n"}
+              <Comment># Use delta for beautiful diffs</Comment>
+              {"\n"}
+              [core]{"\n"}
+              {"    "}pager = delta{"\n\n"}
+              [interactive]{"\n"}
+              {"    "}diffFilter = delta --color-only{"\n\n"}
+              [delta]{"\n"}
+              {"    "}navigate = true{"\n"}
+              {"    "}dark = true{"\n"}
+              {"    "}side-by-side = true{"\n"}
+              {"    "}line-numbers = true{"\n"}
+              {"    "}syntax-theme = Catppuccin Mocha{"\n\n"}
+              [merge]{"\n"}
+              {"    "}conflictstyle = diff3{"\n\n"}
+              [diff]{"\n"}
+              {"    "}colorMoved = default
+            </TerminalWindow>
+          </SubSection>
+
+          <SubSection title="Shell Configuration">
+            <p className="text-sm text-muted-foreground mb-4">
+              The complete <code className="text-primary">~/.zshrc</code> is shown in the{" "}
+              <a href="#terminal" className="text-primary underline">Terminal & Shell</a> section above.
+              It includes Oh My Zsh setup, modern CLI aliases, and all tool initializations.
+            </p>
+          </SubSection>
         </Section>
 
         {/* 10 - BREWFILE */}

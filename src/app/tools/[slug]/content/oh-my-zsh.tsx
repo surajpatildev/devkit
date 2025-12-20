@@ -104,6 +104,10 @@ export default function OhMyZshPage() {
       </DetailSection>
 
       <DetailSection title="Recommended Configuration">
+        <p className="text-muted-foreground mb-4">
+          See the <a href="/#terminal" className="text-primary underline">Terminal & Shell</a> section on the homepage for the complete, optimized <code className="text-primary">~/.zshrc</code> configuration. Here&apos;s the essential structure:
+        </p>
+
         <ConfigBlock filename="~/.zshrc">
 {`# Path to Oh My Zsh installation
 export ZSH="$HOME/.oh-my-zsh"
@@ -111,31 +115,30 @@ export ZSH="$HOME/.oh-my-zsh"
 # Theme - leave empty if using Starship
 ZSH_THEME=""
 
-# Plugins (order matters for some)
+# Essential plugins only (fewer = faster startup)
 plugins=(
   git
   zsh-autosuggestions
   zsh-syntax-highlighting
-  docker
-  npm
-  z
 )
 
 # Load Oh My Zsh
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
-export EDITOR="code --wait"
-export VISUAL="$EDITOR"
-
 # Homebrew
 eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# Editor
+export EDITOR="code --wait"
+export VISUAL="$EDITOR"
 
 # Modern CLI aliases
 alias ls="eza --color=always --icons=always --git"
 alias ll="eza -la --icons=always --git"
 alias tree="eza --tree --icons=always"
 alias cat="bat --paging=never"
+alias grep="rg"
+alias find="fd"
 
 # Tool initializations
 eval "$(starship init zsh)"
@@ -143,6 +146,11 @@ eval "$(zoxide init zsh)"
 eval "$(fzf --zsh)"
 eval "$(fnm env --use-on-cd)"`}
         </ConfigBlock>
+
+        <Tip>
+          The complete configuration with all sections properly organized is available in the{" "}
+          <a href="/#config" className="text-primary underline">Complete Configuration Files</a> section.
+        </Tip>
       </DetailSection>
 
       <DetailSection title="Useful Git Aliases (Built-in)">

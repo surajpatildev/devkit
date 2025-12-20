@@ -67,10 +67,8 @@ export default function StarshipPage() {
 add_newline = true
 command_timeout = 1000
 
-# Prompt format (customize the order)
+# Prompt format - clean and minimal
 format = """
-$username\
-$hostname\
 $directory\
 $git_branch\
 $git_status\
@@ -82,48 +80,55 @@ $docker_context\
 $line_break\
 $character"""
 
-# Directory
+# Directory - Catppuccin Mocha blue
 [directory]
 truncation_length = 3
 truncate_to_repo = true
-style = "bold cyan"
+style = "bold #89b4fa"
 
-# Git branch
+# Git branch - Catppuccin Mocha mauve
 [git_branch]
 symbol = " "
-style = "bold purple"
+style = "bold #cba6f7"
 
-# Git status
+# Git status - Catppuccin Mocha red
 [git_status]
-style = "bold red"
-conflicted = "="
-ahead = "⇡\${count}"
-behind = "⇣\${count}"
-diverged = "⇕⇡\${ahead_count}⇣\${behind_count}"
-untracked = "?\${count}"
-stashed = "📦"
-modified = "!\${count}"
-staged = "+\${count}"
-deleted = "✘\${count}"
+style = "bold #f38ba8"
+format = "([$all_status$ahead_behind]($style) )"
 
-# Python
+# Python - Catppuccin Mocha yellow
 [python]
 symbol = " "
-style = "bold yellow"
+style = "bold #f9e2af"
 format = "[\${symbol}\${pyenv_prefix}(\${version})](\$style) "
 
-# Node.js
+# Node.js - Catppuccin Mocha green
 [nodejs]
 symbol = " "
-style = "bold green"
+style = "bold #a6e3a1"
 format = "[\${symbol}(\${version})](\$style) "
+
+# Rust - Catppuccin Mocha peach
+[rust]
+symbol = " "
+style = "bold #fab387"
+
+# Go - Catppuccin Mocha teal
+[golang]
+symbol = " "
+style = "bold #94e2d5"
 
 # Character (prompt symbol)
 [character]
-success_symbol = "[❯](bold green)"
-error_symbol = "[❯](bold red)"
-vimcmd_symbol = "[❮](bold green)"`}
+success_symbol = "[❯](#a6e3a1)"
+error_symbol = "[❯](#f38ba8)"
+vimcmd_symbol = "[❮](#a6e3a1)"`}
         </ConfigBlock>
+
+        <Tip>
+          This config uses Catppuccin Mocha colors for consistency with Ghostty and delta.
+          See the <a href="/#config" className="text-primary underline">Complete Configuration Files</a> section for the full setup.
+        </Tip>
       </DetailSection>
 
       <DetailSection title="Presets">

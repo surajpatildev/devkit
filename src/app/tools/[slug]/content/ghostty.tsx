@@ -45,20 +45,20 @@ export default function GhosttyPage() {
         </p>
 
         <ConfigBlock filename="~/.config/ghostty/config">
-{`# Font
-font-family = "JetBrains Mono"
+{`# Font - Use Nerd Font for icons in eza, starship, etc.
+font-family = "JetBrains Mono Nerd Font"
 font-size = 14
 font-thicken = true
+
+# Theme - Catppuccin Mocha for consistency with Starship and delta
+theme = catppuccin-mocha
+background-opacity = 0.95
 
 # Window
 window-padding-x = 12
 window-padding-y = 8
 window-decoration = true
 macos-titlebar-style = tabs
-
-# Theme (built-in options: dark, light, or custom)
-theme = dark
-background-opacity = 0.95
 
 # Cursor
 cursor-style = block
@@ -78,6 +78,11 @@ scrollback-limit = 10000
 # Key bindings (fix Ctrl+Enter for some apps)
 keybind = ctrl+enter=text:\\x1b[13;5u`}
         </ConfigBlock>
+
+        <Tip>
+          This config uses the same Catppuccin Mocha theme as Starship and delta for a unified look.
+          See the <a href="/#config" className="text-primary underline">Complete Configuration Files</a> section for all configs.
+        </Tip>
       </DetailSection>
 
       <DetailSection title="Keyboard Shortcuts">
